@@ -18,5 +18,11 @@
     <string name="icon_text_map">Map</string>
     <string name="icon_text_dates">Daten</string>
     <string name="icon_text_info">Info</string>
+    <string name="iconMenuDescrption">Menu icon</string>
+    <string name="iconPricesDescrption">Prices icon</string>
+    <string name="iconBadgeDescrption">Badge icon</string>
+    <string name="iconMapDescrption">Map icon</string>
+    <string name="iconDatesDescrption">Dates icon</string>
+    <string name="iconInfoDescrption">Info icon</string>   
 
 </resources>
