@@ -21,15 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity"
-            android:label="@string/title_activity_" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu" >
             <meta-data
@@ -39,47 +30,37 @@
         <activity
             android:name=".PriceActivity"
             android:label="@string/title_activity_price" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hsr.hsrbuddy.MainActivity" />
         </activity>
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hsr.hsrbuddy.MainActivity" />
         </activity>
         <activity
             android:name=".BadgeActivity"
             android:label="@string/title_activity_badge" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hsr.hsrbuddy.MainActivity" />
         </activity>
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hsr.hsrbuddy.MainActivity" />
         </activity>
         <activity
             android:name=".DatesActivity"
             android:label="@string/title_activity_dates" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hsr.hsrbuddy.MainActivity" />
         </activity>
     </application>
 
