@@ -9,7 +9,7 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_price">PriceActivity</string>
     <string name="title_activity_map">MapActivity</string>
-    <string name="title_activity_badge">BadgeActivity</string>
+    <string name="title_activity_badge">Badge</string>
     <string name="title_activity_info">InfoActivity</string>
     <string name="title_activity_dates">DatesActivity</string>
     <string name="icon_text_menu">Menu</string>
@@ -23,6 +23,7 @@
     <string name="iconBadgeDescrption">Badge icon</string>
     <string name="iconMapDescrption">Map icon</string>
     <string name="iconDatesDescrption">Dates icon</string>
-    <string name="iconInfoDescrption">Info icon</string>   
+    <string name="iconInfoDescrption">Info icon</string>
+    <string name="currentBalanceLabel">Aktueller Kontostand:</string>   
 
 </resources>

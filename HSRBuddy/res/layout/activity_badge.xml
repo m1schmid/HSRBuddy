@@ -1,14 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
+
+    <!-- Title -->
 
     <TextView
+        android:id="@+id/badgeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:paddingBottom="25dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
         android:text="@string/title_activity_badge"
-        tools:context=".BadgeActivity" />
+        android:textSize="25dp" />
+
+    <!-- CurrentBalance Label -->
+
+    <TextView
+        android:id="@+id/currentBalanceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/badgeTitle"
+        android:text="@string/currentBalanceLabel"
+        android:textStyle="bold" />
+
+    <!-- CurrentBalance Value -->
+
+    <TextView
+        android:id="@+id/currentBalanceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/badgeTitle"
+        android:textStyle="bold" />
+
+    <!-- Last Expense Titel 1.Row -->
+
+    <TextView
+        android:id="@+id/lastExpense1stRowTitel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/currentBalanceValue"
+        android:textStyle="bold" />
+
+    <!-- Last Expense Value 1.Row -->
+
+    <TextView
+        android:id="@+id/lastExpense1stRowValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lastExpense1stRowTitel" />
 
 </RelativeLayout>
