@@ -24,6 +24,9 @@
     <string name="iconMapDescrption">Map icon</string>
     <string name="iconDatesDescrption">Dates icon</string>
     <string name="iconInfoDescrption">Info icon</string>
-    <string name="currentBalanceLabel">Aktueller Kontostand:</string>   
+    <string name="currentBalanceLabel">Aktueller Kontostand:</string>  
+    <string name="totalLabel">Gesamttotal:</string>
+    <string name="totaPrinterlLabel">Total Drucker:</string>  
+    <string name="totalMensaLabel">Total Mensa:</string>    
 
 </resources>

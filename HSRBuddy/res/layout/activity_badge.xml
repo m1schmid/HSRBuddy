@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="15dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp" >
 
@@ -27,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/badgeTitle"
+        android:layout_below="@+id/badgeTitle"
         android:text="@string/currentBalanceLabel"
         android:textStyle="bold" />
 
@@ -38,8 +39,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/badgeTitle"
+        android:layout_below="@+id/badgeTitle"
         android:textStyle="bold" />
+
+    <!-- Horizontal Top Line 1.Row -->
+
+    <View
+        android:id="@+id/firstline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/currentBalanceLabel"
+        android:background="#DDDDDDDD" />
 
     <!-- Last Expense Titel 1.Row -->
 
@@ -48,7 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/currentBalanceValue"
+        android:layout_below="@+id/firstline"
+        android:text="01.01.2012 - 11:15"
         android:textStyle="bold" />
 
     <!-- Last Expense Value 1.Row -->
@@ -58,6 +69,137 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lastExpense1stRowTitel" />
+        android:layout_below="@+id/lastExpense1stRowTitel"
+        android:text="Mensa Kasse 2.50 CHF" />
+
+    <!-- Horizontal Top Line 2.Row -->
+
+    <View
+        android:id="@+id/secondline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/lastExpense1stRowValue"
+        android:background="#DDDDDDDD" />
+
+    <!-- Last Expense Titel 2.Row -->
+
+    <TextView
+        android:id="@+id/lastExpense2ndRowTitel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/secondline"
+        android:text="01.01.2012 - 11:15"
+        android:textStyle="bold" />
+
+    <!-- Last Expense Value 2.Row -->
+
+    <TextView
+        android:id="@+id/lastExpense2ndRowValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lastExpense2ndRowTitel"
+        android:text="Mensa Kasse 2.50 CHF" />
+
+    <!-- Horizontal Top Line 3.Row -->
+
+    <View
+        android:id="@+id/thirdline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/lastExpense2ndRowValue"
+        android:background="#DDDDDDDD" />
+
+    <!-- Last Expense Titel 3.Row -->
+
+    <TextView
+        android:id="@+id/lastExpense3rdRowTitel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/thirdline"
+        android:text="01.01.2012 - 11:15"
+        android:textStyle="bold" />
+
+    <!-- Last Expense Value 3.Row -->
+
+    <TextView
+        android:id="@+id/lastExpense3rdRowValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lastExpense3rdRowTitel"
+        android:text="Mensa Kasse 2.50 CHF" />
+
+    <!-- totalMensaLabel -->
+
+    <TextView
+        android:id="@+id/totalMensaLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/totalPrinterLabel"
+        android:layout_alignParentLeft="true"
+        android:text="@string/totalMensaLabel" />
+
+    <!-- totalMensaValue -->
+
+    <TextView
+        android:id="@+id/totalMensaValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/totalPrinterLabel"
+        android:layout_alignParentRight="true"
+        android:text="25.50 CHF" />
+
+    <!-- totalPrinterLabel -->
+
+    <TextView
+        android:id="@+id/totalPrinterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lastline"
+        android:layout_alignParentLeft="true"
+        android:text="@string/totaPrinterlLabel" />
+
+    <!-- totalPrinterValue -->
+
+    <TextView
+        android:id="@+id/totalPrinterValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lastline"
+        android:layout_alignParentRight="true"
+        android:text="99.50 CHF" />
+
+    <!-- Horizontal Last Line -->
+
+    <View
+        android:id="@+id/lastline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_above="@+id/totalTitle"
+        android:background="#DDDDDDDD" />
+
+    <!-- Last Row Total Left -->
+
+    <TextView
+        android:id="@+id/totalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/totalLabel"
+        android:textStyle="bold" />
+
+    <!-- Last Row Total Right -->
+
+    <TextView
+        android:id="@+id/totalValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="114.25 CHF" />
 
 </RelativeLayout>

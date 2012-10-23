@@ -1,5 +1,7 @@
 package ch.hsr.hsrbuddy;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,8 +10,9 @@ import android.widget.TextView;
 
 public class BadgeActivity extends Activity {
 	
-	private double latestBalance;
 	final Handler badgeHandler = new Handler();
+	private double latestBalance;
+	//TODO: All variables for location, expense etc, make arraylist, REMOVE ALL DUMY TEXT IN ACTIVTY BADGE XML
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
