@@ -31,12 +31,8 @@ public class DatesActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dates);
-		layout = (LinearLayout) findViewById(R.id.dates);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
+		layout = (LinearLayout) findViewById(R.id.dates);		
+		
 		mDialog = new ProgressDialog(this);
 		mDialog.setMessage("Loading...");
         mDialog.setCancelable(false);
