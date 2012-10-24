@@ -1,15 +1,12 @@
-package ch.hsr.hsrbuddy.util;
+package ch.hsr.hsrbuddy.domain;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import ch.hsr.hsrbuddy.domain.Menuplan;
-import ch.hsr.hsrbuddy.domain.MenuplanItem;
 
 public class MenuplanCrawler {
 	
@@ -22,8 +19,8 @@ public class MenuplanCrawler {
 	private final static String HTML_ELEMENT_MENU_DESCRIPTION = "div.menu-description";
 	private final static String HTML_ELEMENT_MENU_TITLE = "div.offer-description";
 	
-	public static ArrayList<Menuplan> getMenuplans() {
-		ArrayList<Menuplan> menuplans = new ArrayList<Menuplan>();
+	public static MenuplanList getMenuplans() {
+		MenuplanList menuplans = new MenuplanList();
 		for (int i = 1; i <= WEEKDAYS; i++) {
 			String dailyMenuplanUrl = MENUPLAN_BASE_URL + i;
 			try {

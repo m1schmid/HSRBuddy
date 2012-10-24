@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public 	class Menuplan implements Serializable {
+public class Menuplan implements Serializable {
 	
 	private static final long serialVersionUID = -894564355751702594L;
 	
