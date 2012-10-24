@@ -14,18 +14,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import ch.hsr.hsrbuddy.R;
+import ch.hsr.hsrbuddy.util.Persistency;
 
 public class DatesActivity extends Activity {
 
+	private final String MAIN_URL = "http://www.hsr.ch/Aktuelles.93.0.html?&L=0";
+	private final String DATES_FILENAME = "/dates.tmp";
 	private ArrayList<String> semesterDateURLs = new ArrayList<String>();
 	private ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
-	final Handler datesHandler = new Handler();
+	private final Handler datesHandler = new Handler();
 	private LinearLayout layout;
 	private Context that = this;
 	private ProgressDialog mDialog;
@@ -33,6 +37,7 @@ public class DatesActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("Errööör", "Dini mueter");
 		setContentView(R.layout.activity_dates);
 		layout = (LinearLayout) findViewById(R.id.dates);
 
@@ -50,6 +55,18 @@ public class DatesActivity extends Activity {
 		ArrayList<String> oneLine;
 
 		public void run() {
+			System.out.println("blub");
+			if(Persistency.isOlder(getFilesDir() + DATES_FILENAME, 7)){
+				System.out.println("bla");
+				crawlWebsite();
+				Persistency.writeFile(lines, getFilesDir() + DATES_FILENAME);
+			} else {
+				lines = (ArrayList<ArrayList<String>>) Persistency.readFile(getFilesDir() + DATES_FILENAME);
+			}
+			datesHandler.post(updateUI);
+		}
+
+		private void crawlWebsite() {
 			getURLsToParse();
 			Document doc;
 			try {
@@ -77,7 +94,6 @@ public class DatesActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			datesHandler.post(updateUI);
 		}
 	};
 
@@ -125,7 +141,7 @@ public class DatesActivity extends Activity {
 	private void getURLsToParse() {
 		Document doc;
 		try {
-			doc = Jsoup.connect("http://www.hsr.ch/Aktuelles.93.0.html?&L=0").get();
+			doc = Jsoup.connect(MAIN_URL).get();
 			Element navi = doc.getElementById("navigation");
 			Elements links = navi.getElementsByTag("a");
 			for (Element link : links) {
