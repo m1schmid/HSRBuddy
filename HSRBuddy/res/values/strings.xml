@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name">HSRBuddy</string>
+    <string name="hello_world">Hello world changed by Mike!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="main_title">HSR Buddy</string>
+    <string name="title_activity_">Activity</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_price">PriceActivity</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_badge">Badge</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="title_activity_dates">DatesActivity</string>
+    <string name="icon_text_menu">Menu</string>
+    <string name="icon_text_prices">Preise</string>
+    <string name="icon_text_badge">Badge</string>
+    <string name="icon_text_map">Map</string>
+    <string name="icon_text_dates">Daten</string>
+    <string name="icon_text_info">Info</string>
+    <string name="iconMenuDescrption">Menu icon</string>
+    <string name="iconPricesDescrption">Prices icon</string>
+    <string name="iconBadgeDescrption">Badge icon</string>
+    <string name="iconMapDescrption">Map icon</string>
+    <string name="iconDatesDescrption">Dates icon</string>
+    <string name="iconInfoDescrption">Info icon</string>
+    <string name="currentBalanceLabel">Aktueller Kontostand:</string>  
+    <string name="totalLabel">Gesamttotal:</string>
+    <string name="totaPrinterlLabel">Total Drucker:</string>  
+    <string name="totalMensaLabel">Total Mensa:</string>    
+
+</resources>
