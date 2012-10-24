@@ -124,8 +124,8 @@ public class BadgeActivity extends Activity {
     		TextView expenseLocationAndAmount3 = (TextView) findViewById(R.id.lastExpenseRowValue3);
     		expenseLocationAndAmount3.setText(lastPurchases.get(2).location + " " + dFormat.format(lastPurchases.get(2).amount) + " CHF");
     		
-    		TextView lastUpdatedBalance = (TextView) findViewById(R.id.lastUpdatedBalanceLabel);
-    		lastUpdatedBalance.setText("Aktualisiert: " + dateFormat.format(lastUpdatedBalance));
+    		TextView lastUpdatedBalanceView = (TextView) findViewById(R.id.lastUpdatedBalanceLabel);
+    		lastUpdatedBalanceView.setText("Aktualisiert: " + dateFormat.format(lastUpdatedBalance));
     		
     		TextView mensaTotalView = (TextView) findViewById(R.id.totalMensaValue);
     		mensaTotalView.setText(dFormat.format(mensaTotal) + " CHF");
@@ -136,10 +136,8 @@ public class BadgeActivity extends Activity {
     		TextView totalView = (TextView) findViewById(R.id.totalValue);
     		totalView.setText(dFormat.format(total) + " CHF");
     		
-    		
-    		//TODO: FIX ERROR
-    		//TextView lastUpdatedTotalBalance = (TextView) findViewById(R.id.lastUpdatedWholeBalanceLabel);
-    		//lastUpdatedTotalBalance.setText("Aktualisiert: " + dateFormat.format(lastUpdatedWholeBalance));
+    		TextView lastUpdatedWholeBalanceView = (TextView) findViewById(R.id.lastUpdatedWholeBalanceLabel);
+    		lastUpdatedWholeBalanceView.setText("Aktualisiert: " + dateFormat.format(lastUpdatedWholeBalance));
     		
 			mDialog.dismiss();
     		
