@@ -1,6 +1,11 @@
-package ch.hsr.hsrbuddy;
+package ch.hsr.hsrbuddy.activity;
 
 import java.util.Date;
+
+import ch.hsr.hsrbuddy.R;
+import ch.hsr.hsrbuddy.R.id;
+import ch.hsr.hsrbuddy.R.layout;
+import ch.hsr.hsrbuddy.R.menu;
 
 import android.app.Activity;
 import android.os.Bundle;

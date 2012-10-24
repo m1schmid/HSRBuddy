@@ -1,10 +1,11 @@
-package ch.hsr.hsrbuddy;
+package ch.hsr.hsrbuddy.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import ch.hsr.hsrbuddy.R;
 
 public class MainActivity extends Activity {
 

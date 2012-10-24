@@ -1,4 +1,4 @@
-package ch.hsr.hsrbuddy;
+package ch.hsr.hsrbuddy.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,6 +7,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import ch.hsr.hsrbuddy.R;
+import ch.hsr.hsrbuddy.R.id;
+import ch.hsr.hsrbuddy.R.layout;
+import ch.hsr.hsrbuddy.R.menu;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
