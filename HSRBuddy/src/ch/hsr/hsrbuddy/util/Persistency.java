@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Persistency {
-
+	
 	public static Object readFile(String filePath) {
 		Object obj = null;
 		try {
@@ -39,11 +39,34 @@ public class Persistency {
 	}
 
 	public static boolean isOlder(String filePath, int days) {
-		File file = new File(filePath);
-		if(!file.exists()) return true;
-		Date fileDate = new Date(file.lastModified());
+		Date fileDate = getLastMadified(filePath);
+		if(fileDate == null) return true;
+		
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DATE, -days);
 		return fileDate.before(c.getTime());
+	}
+	
+	public static boolean isModifiedBetweenMonAndFri(String filePath){
+		Calendar c = Calendar.getInstance();
+		
+		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		Date monday = c.getTime();
+		
+		c.add(Calendar.DATE, 5);
+		Date friday = c.getTime();
+		
+		return isModifiedBetween(filePath, monday, friday);
+	}
+	
+	public static boolean isModifiedBetween(String filePath, Date start, Date end){
+		Date fileDate = getLastMadified(filePath);
+		return !(fileDate == null) && fileDate.after(start) && fileDate.before(end);
+	}
+	
+	private static Date getLastMadified(String filePath){
+		File file = new File(filePath);
+		if(!file.exists()) return null;
+		return new Date(file.lastModified());
 	}
 }
