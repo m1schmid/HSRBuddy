@@ -11,6 +11,8 @@ public 	class Menuplan implements Serializable {
 	private String date;
 	private List<MenuplanItem> menuplan = new ArrayList<MenuplanItem>();
 	
+	public Menuplan() {}
+	
 	public Menuplan(String date) {
 		this.date = date;
 	}
