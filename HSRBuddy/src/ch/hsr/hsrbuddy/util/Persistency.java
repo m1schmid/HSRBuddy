@@ -47,7 +47,7 @@ public class Persistency {
 		return fileDate.before(c.getTime());
 	}
 	
-	public static boolean isModifiedBetweenMonAndFri(String filePath){
+	public static boolean wasModifiedThisWeek(String filePath){
 		Calendar c = Calendar.getInstance();
 		
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);

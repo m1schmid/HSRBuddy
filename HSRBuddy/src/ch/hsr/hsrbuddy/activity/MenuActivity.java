@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -20,15 +21,16 @@ public class MenuActivity extends Activity {
 
 	private final String LOADING_MESSAGE = "Lade neusten Menuplan herunter...";
 	private final String MENUPLAN_FILENAME = "menuplan.tmp";
-	// TODO new name
 	private final Handler mHandler = new Handler();
 	private ProgressDialog mDialog;
 	private MenuplanList menuplanList = new MenuplanList();
+	private RelativeLayout rootLayout;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
+		rootLayout = (RelativeLayout) findViewById(R.id.menu);
 	}
 
 	@Override
@@ -51,40 +53,45 @@ public class MenuActivity extends Activity {
 
 	private final Runnable crawlMenuplan = new Runnable() {
 		public void run() {
+			initMenuplanList();
+			mHandler.post(updateUI);
+		}
+
+		private void initMenuplanList() {
 			String filePath = getFilesDir() + "/" + MENUPLAN_FILENAME;
 
-			if (Persistency.isModifiedBetweenMonAndFri(filePath)) {
+			if (Persistency.wasModifiedThisWeek(filePath)) {
 				Object obj = Persistency.readFile(filePath);
-				if(obj instanceof MenuplanList)
+				if (obj instanceof MenuplanList)
 					menuplanList = (MenuplanList) obj;
 			}
 			if (menuplanList.size() == 0) {
 				menuplanList = MenuplanCrawler.getMenuplans();
 				Persistency.writeFile(menuplanList, filePath);
 			}
-			mHandler.post(updateUI);
 		}
 	};
 
 	final Runnable updateUI = new Runnable() {
 		public void run() {
+			rootLayout.removeAllViews();
+			
+			HorizontalSwipeLayout swipeLayout = new HorizontalSwipeLayout(rootLayout.getContext());
+			ArrayList<View> menuplanViews = createMenuplanViews(swipeLayout.getContext());
+			swipeLayout.setViewItems(menuplanViews);
 
-			RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu);
-			layout.removeAllViews();
+			rootLayout.addView(swipeLayout);
+			mDialog.dismiss();
+		}
 
-			HorizontalSwipeLayout horizontalSwipeLayout = new HorizontalSwipeLayout(
-					layout.getContext());
-
+		private ArrayList<View> createMenuplanViews(Context ctx) {
 			ArrayList<View> menuplanViews = new ArrayList<View>();
 			for (int i = 0; i < menuplanList.size(); i++) {
-				MenuplanView menuplanView = new MenuplanView(horizontalSwipeLayout.getContext());
+				MenuplanView menuplanView = new MenuplanView(ctx);
 				menuplanView.setMenuplan(menuplanList.get(i));
 				menuplanViews.add(menuplanView);
 			}
-			horizontalSwipeLayout.setViewItems(menuplanViews);
-
-			layout.addView(horizontalSwipeLayout);
-			mDialog.dismiss();
+			return menuplanViews;
 		}
 	};
 }

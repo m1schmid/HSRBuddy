@@ -13,7 +13,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 public class HorizontalSwipeLayout extends HorizontalScrollView {
-    private static final int SWIPE_MIN_DISTANCE = 5;
+    private static final int SWIPE_MIN_DISTANCE = 3;
     private static final int SWIPE_THRESHOLD_VELOCITY = 300;
  
     private ArrayList<View> mItems = null;
@@ -83,7 +83,7 @@ public class HorizontalSwipeLayout extends HorizontalScrollView {
                     return true;
                 }
             } catch (Exception e) {
-                    Log.e("Fling", "There was an error processing the Fling event:" + e.getMessage());
+                    Log.w("Fling", "There was an error processing the Fling event:" + e.getMessage());
             }
             return false;
         }
