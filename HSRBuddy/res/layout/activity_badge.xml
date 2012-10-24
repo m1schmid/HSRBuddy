@@ -54,23 +54,21 @@
     <!-- Last Expense Titel 1.Row -->
 
     <TextView
-        android:id="@+id/lastExpense1stRowTitel"
+        android:id="@+id/lastExpenseRowTitel1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/firstline"
-        android:text="01.01.2012 - 11:15"
         android:textStyle="bold" />
 
     <!-- Last Expense Value 1.Row -->
 
     <TextView
-        android:id="@+id/lastExpense1stRowValue"
+        android:id="@+id/lastExpenseRowValue1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lastExpense1stRowTitel"
-        android:text="Mensa Kasse 2.50 CHF" />
+        android:layout_below="@+id/lastExpenseRowTitel1" />
 
     <!-- Horizontal Top Line 2.Row -->
 
@@ -78,29 +76,27 @@
         android:id="@+id/secondline"
         android:layout_width="fill_parent"
         android:layout_height="1dip"
-        android:layout_below="@+id/lastExpense1stRowValue"
+        android:layout_below="@+id/lastExpenseRowValue1"
         android:background="#DDDDDDDD" />
 
     <!-- Last Expense Titel 2.Row -->
 
     <TextView
-        android:id="@+id/lastExpense2ndRowTitel"
+        android:id="@+id/lastExpenseRowTitel2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/secondline"
-        android:text="01.01.2012 - 11:15"
         android:textStyle="bold" />
 
     <!-- Last Expense Value 2.Row -->
 
     <TextView
-        android:id="@+id/lastExpense2ndRowValue"
+        android:id="@+id/lastExpenseRowValue2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lastExpense2ndRowTitel"
-        android:text="Mensa Kasse 2.50 CHF" />
+        android:layout_below="@+id/lastExpenseRowTitel2" />
 
     <!-- Horizontal Top Line 3.Row -->
 
@@ -108,29 +104,88 @@
         android:id="@+id/thirdline"
         android:layout_width="fill_parent"
         android:layout_height="1dip"
-        android:layout_below="@+id/lastExpense2ndRowValue"
+        android:layout_below="@+id/lastExpenseRowValue2"
         android:background="#DDDDDDDD" />
 
     <!-- Last Expense Titel 3.Row -->
 
     <TextView
-        android:id="@+id/lastExpense3rdRowTitel"
+        android:id="@+id/lastExpenseRowTitel3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/thirdline"
-        android:text="01.01.2012 - 11:15"
         android:textStyle="bold" />
 
     <!-- Last Expense Value 3.Row -->
 
     <TextView
-        android:id="@+id/lastExpense3rdRowValue"
+        android:id="@+id/lastExpenseRowValue3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/lastExpense3rdRowTitel"
-        android:text="Mensa Kasse 2.50 CHF" />
+        android:layout_below="@+id/lastExpenseRowTitel3" />
+
+    <!-- Last Line of Expenses -->
+
+    <View
+        android:id="@+id/fourthline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/lastExpenseRowValue3"
+        android:background="#DDDDDDDD" />
+
+    <!-- Last Updated Balance -->
+
+    <TextView
+        android:id="@+id/lastUpdatedBalanceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/fourthline"
+        android:textSize="11sp"
+        android:textStyle="italic" />
+
+    <!-- REPLACE THIS WITH UPDATE BUTTON / ICON -->
+
+    <TextView
+        android:id="@+id/UpdateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/fourthline"
+        android:text="refresh"
+        android:textSize="11sp"
+        android:textStyle="italic" />
+
+    <!-- Last Row Total Left -->
+
+    <TextView
+        android:id="@+id/totalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lineAboveTotal"
+        android:layout_alignParentLeft="true"
+        android:text="@string/totalLabel"
+        android:textStyle="bold" />
+
+    <!-- Last Row Total Right -->
+
+    <TextView
+        android:id="@+id/totalValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lineAboveTotal"
+        android:layout_alignParentRight="true" />
+
+    <!-- Horizontal Line above Total -->
+
+    <View
+        android:id="@+id/lineAboveTotal"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_above="@+id/totalMensaLabel"
+        android:background="#DDDDDDDD" />
 
     <!-- totalMensaLabel -->
 
@@ -149,8 +204,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/totalPrinterLabel"
-        android:layout_alignParentRight="true"
-        android:text="25.50 CHF" />
+        android:layout_alignParentRight="true" />
 
     <!-- totalPrinterLabel -->
 
@@ -158,7 +212,7 @@
         android:id="@+id/totalPrinterLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lastline"
+        android:layout_above="@+id/lineAboveWholeTotal"
         android:layout_alignParentLeft="true"
         android:text="@string/totaPrinterlLabel" />
 
@@ -168,38 +222,39 @@
         android:id="@+id/totalPrinterValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lastline"
-        android:layout_alignParentRight="true"
-        android:text="99.50 CHF" />
+        android:layout_above="@+id/lineAboveWholeTotal"
+        android:layout_alignParentRight="true" />
 
-    <!-- Horizontal Last Line -->
+    <!-- neu -->
 
     <View
-        android:id="@+id/lastline"
+        android:id="@+id/lineAboveWholeTotal"
         android:layout_width="fill_parent"
         android:layout_height="1dip"
-        android:layout_above="@+id/totalTitle"
+        android:layout_above="@+id/lastUpdatedWholeBalanceLabel"
         android:background="#DDDDDDDD" />
 
-    <!-- Last Row Total Left -->
+    <!-- Last Updated Whole Balance -->
 
     <TextView
-        android:id="@+id/totalTitle"
+        android:id="@+id/lastUpdatedWholeBalanceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="@string/totalLabel"
-        android:textStyle="bold" />
+        android:textSize="11sp"
+        android:textStyle="italic" />
 
-    <!-- Last Row Total Right -->
+    <!-- REPLACE THIS WITH UPDATE BUTTON / ICON -->
 
     <TextView
-        android:id="@+id/totalValue"
+        android:id="@+id/UpdateWholeBalanceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="114.25 CHF" />
+        android:text="refresh"
+        android:textSize="11sp"
+        android:textStyle="italic" />
 
 </RelativeLayout>

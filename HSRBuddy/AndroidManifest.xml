@@ -42,7 +42,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.hsr.hsrbuddy.MainActivity" />
         </activity>
-        <activity			android:name=".activity.BadgeActivityndroid"
+        <activity			android:name=".activity.BadgeActivity"
             android:label="@string/title_activity_badge" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
