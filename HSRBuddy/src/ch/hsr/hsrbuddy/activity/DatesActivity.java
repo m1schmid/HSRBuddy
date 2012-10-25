@@ -14,8 +14,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class DatesActivity extends Activity {
 	private LinearLayout layout;
 	private Context that = this;
 	private ProgressDialog mDialog;
+	private boolean manualRefresh = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,25 +52,39 @@ public class DatesActivity extends Activity {
 		return true;
 	}
 
-	private final Runnable parseValues = new Runnable() {
-		ArrayList<String> oneLine;
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.dates_refresh:
+			Log.i("blubb", "bla");
+			manualRefresh = true;
+			showLoadingDialog();
+			new Thread(parseValues, "parseValuesThread").start();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
-		@SuppressWarnings("unchecked")
+	private final Runnable parseValues = new Runnable() {
+
 		public void run() {
 			String filePath = getFilesDir() + DATES_FILENAME;
-			if (Persistency.isOlder(filePath, 7)) {
+			if (Persistency.isOlder(filePath, 7) || manualRefresh) {
 				crawlWebsite();
 				Persistency.writeFile(lines, filePath);
 			} else {
 				Object obj = Persistency.readFile(filePath);
-				if (obj instanceof ArrayList<?>){
-					lines = (ArrayList<ArrayList<String>>) Persistency.readFile(filePath);
+				if (obj instanceof ArrayList<?>) {
+					lines = (ArrayList<ArrayList<String>>) obj;
 				}
 			}
 			DATES_HANDLER.post(updateUI);
 		}
 
 		private void crawlWebsite() {
+			ArrayList<String> oneLine;
+			lines.clear();
 			getURLsToParse();
 			Document doc;
 			try {
@@ -76,7 +93,8 @@ public class DatesActivity extends Activity {
 				for (int i = 1; i < rows.size(); i++) {
 					Elements cells = rows.get(i).select("td");
 					oneLine = new ArrayList<String>();
-					if (cells.get(0).select("b").isEmpty() && cells.get(0).select("[style*=bold]").isEmpty()) {
+					if (cells.get(0).select("b").isEmpty()
+							&& cells.get(0).select("[style*=bold]").isEmpty()) {
 						if (cells.get(0).text().length() > 0) {
 							oneLine.add(cells.get(0).text());
 							oneLine.add(cells.get(1).text());
@@ -102,6 +120,8 @@ public class DatesActivity extends Activity {
 			LinearLayout line;
 			LinearLayout leftLayout;
 			LinearLayout rightLayout;
+			
+			layout.removeAllViews();
 
 			for (int i = 0; i < lines.size(); i++) {
 				line = new LinearLayout(that);
@@ -133,6 +153,7 @@ public class DatesActivity extends Activity {
 
 				layout.addView(line);
 			}
+			manualRefresh = false;
 			mDialog.dismiss();
 		}
 	};
