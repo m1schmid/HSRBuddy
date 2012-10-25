@@ -1,10 +1,27 @@
 package ch.hsr.hsrbuddy.activity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -43,6 +60,9 @@ public class BadgeActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		//colin test
+		jsonTest();
 		
 		mDialog = new ProgressDialog(this);
 		mDialog.setMessage("Loading...");
@@ -144,6 +164,51 @@ public class BadgeActivity extends Activity {
     		System.out.println("The values has been set in the UI.");
         }
     };
+    
+    public void jsonTest(){
+    	StringBuilder sB = new StringBuilder();
+    	DefaultHttpClient httpClient = new DefaultHttpClient();
+    	HttpGet httpGet = new HttpGet("https://152.96.80.18/VerrechnungsportalService.svc/json/getBadgeSaldo");
+    	String username = "SIFSV-80018\\ChallPUser";
+    	String password = "1q$2w$3e$4r$5t";
+    	
+    	httpClient.getCredentialsProvider().setCredentials(new AuthScope(null, -1), new UsernamePasswordCredentials(username,password));
+    	try{
+    		HttpResponse httpResponse = httpClient.execute(httpGet);
+    		StatusLine statusLine = httpResponse.getStatusLine();
+    		int statusCode = statusLine.getStatusCode();
+    		if(statusCode == 200){
+    			HttpEntity entity = httpResponse.getEntity();
+    			InputStream content = entity.getContent();
+    			BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+    			String line;
+    			while((line = reader.readLine()) != null){
+    				sB.append(line);
+    			}
+    			
+    			System.out.println(sB.toString());
+
+//				try {
+//					JSONObject jsonObj = new JSONObject(sB.toString());
+//					JSONArray jsonArray = jsonObj.getJSONArray("menus");
+//					for (int i = 0; i < jsonArray.length(); i++) {
+//						JSONObject subJSONObj = jsonArray.getJSONObject(i);
+//						String price = subJSONObj.getString("price_external");
+//						System.out.println(price);
+//					}
+//				} catch (JSONException e) {
+//					e.printStackTrace();
+//				}
+				
+    		} else {
+    			System.out.println("ERROR - Failed to download file (Status Code not 200)");
+    		}
+        } catch (ClientProtocolException e) {
+        	e.printStackTrace();
+        } catch (IOException e){
+        	e.printStackTrace();
+        }
+    }  
     
     private class ExpenseItem{
     	private Date date;
