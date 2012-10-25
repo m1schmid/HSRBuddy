@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<maps xmlns:android="http://schemas.android.com/apk/res/android">
+    <map name="hsrmap">
+        <area name="Gebaeude 1" shape="rect" coords="180,460,480,575" id="@+id/building1"/>
+	</map>
+</maps>
