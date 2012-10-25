@@ -14,7 +14,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.ViewGroup.LayoutParams;
@@ -27,9 +26,9 @@ public class DatesActivity extends Activity {
 
 	private final String MAIN_URL = "http://www.hsr.ch/Aktuelles.93.0.html?&L=0";
 	private final String DATES_FILENAME = "/dates.tmp";
+	private final Handler DATES_HANDLER = new Handler();
 	private ArrayList<String> semesterDateURLs = new ArrayList<String>();
 	private ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
-	private final Handler datesHandler = new Handler();
 	private LinearLayout layout;
 	private Context that = this;
 	private ProgressDialog mDialog;
@@ -37,7 +36,6 @@ public class DatesActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i("Errööör", "Dini mueter");
 		setContentView(R.layout.activity_dates);
 		layout = (LinearLayout) findViewById(R.id.dates);
 
@@ -54,16 +52,19 @@ public class DatesActivity extends Activity {
 	private final Runnable parseValues = new Runnable() {
 		ArrayList<String> oneLine;
 
+		@SuppressWarnings("unchecked")
 		public void run() {
-			System.out.println("blub");
-			if(Persistency.isOlder(getFilesDir() + DATES_FILENAME, 7)){
-				System.out.println("bla");
+			String filePath = getFilesDir() + DATES_FILENAME;
+			if (Persistency.isOlder(filePath, 7)) {
 				crawlWebsite();
-				Persistency.writeFile(lines, getFilesDir() + DATES_FILENAME);
+				Persistency.writeFile(lines, filePath);
 			} else {
-				lines = (ArrayList<ArrayList<String>>) Persistency.readFile(getFilesDir() + DATES_FILENAME);
+				Object obj = Persistency.readFile(filePath);
+				if (obj instanceof ArrayList<?>){
+					lines = (ArrayList<ArrayList<String>>) Persistency.readFile(filePath);
+				}
 			}
-			datesHandler.post(updateUI);
+			DATES_HANDLER.post(updateUI);
 		}
 
 		private void crawlWebsite() {
@@ -75,8 +76,7 @@ public class DatesActivity extends Activity {
 				for (int i = 1; i < rows.size(); i++) {
 					Elements cells = rows.get(i).select("td");
 					oneLine = new ArrayList<String>();
-					if (cells.get(0).select("b").isEmpty()
-							&& cells.get(0).select("[style*=bold]").isEmpty()) {
+					if (cells.get(0).select("b").isEmpty() && cells.get(0).select("[style*=bold]").isEmpty()) {
 						if (cells.get(0).text().length() > 0) {
 							oneLine.add(cells.get(0).text());
 							oneLine.add(cells.get(1).text());
@@ -91,7 +91,6 @@ public class DatesActivity extends Activity {
 					lines.add(oneLine);
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -99,7 +98,7 @@ public class DatesActivity extends Activity {
 
 	final Runnable updateUI = new Runnable() {
 		public void run() {
-			TextView informationView;
+			TextView testView;
 			LinearLayout line;
 			LinearLayout leftLayout;
 			LinearLayout rightLayout;
@@ -111,12 +110,12 @@ public class DatesActivity extends Activity {
 
 				leftLayout = new LinearLayout(that);
 				leftLayout.setLayoutParams(new LinearLayout.LayoutParams(
-								LayoutParams.MATCH_PARENT,
-								LayoutParams.WRAP_CONTENT));
+						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 				leftLayout.setGravity(Gravity.LEFT);
 
 				rightLayout = new LinearLayout(that);
-				leftLayout.setLayoutParams(new LinearLayout.LayoutParams(
+				leftLayout
+						.setLayoutParams(new LinearLayout.LayoutParams(
 								LayoutParams.MATCH_PARENT,
 								LayoutParams.WRAP_CONTENT, 2));
 				rightLayout.setGravity(Gravity.RIGHT);
@@ -124,13 +123,13 @@ public class DatesActivity extends Activity {
 				line.addView(leftLayout, 0);
 				line.addView(rightLayout, 1);
 
-				informationView = new TextView(that);
-				informationView.setText(Html.fromHtml(lines.get(i).get(0)));
-				leftLayout.addView(informationView);
+				testView = new TextView(that);
+				testView.setText(Html.fromHtml(lines.get(i).get(0)));
+				leftLayout.addView(testView);
 
-				informationView = new TextView(that);
-				informationView.setText(Html.fromHtml(lines.get(i).get(1)));
-				rightLayout.addView(informationView);
+				testView = new TextView(that);
+				testView.setText(Html.fromHtml(lines.get(i).get(1)));
+				rightLayout.addView(testView);
 
 				layout.addView(line);
 			}
@@ -150,7 +149,6 @@ public class DatesActivity extends Activity {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

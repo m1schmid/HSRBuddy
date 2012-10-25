@@ -11,7 +11,7 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_badge">Badge</string>
     <string name="title_activity_info">InfoActivity</string>
-    <string name="title_activity_dates">DatesActivity</string>
+    <string name="title_activity_dates">Semesterdaten</string>
     <string name="icon_text_menu">Menu</string>
     <string name="icon_text_prices">Preise</string>
     <string name="icon_text_badge">Badge</string>
@@ -27,6 +27,7 @@
     <string name="currentBalanceLabel">Aktueller Kontostand:</string>  
     <string name="totalLabel">Gesamttotal:</string>
     <string name="totaPrinterlLabel">Total Drucker:</string>  
-    <string name="totalMensaLabel">Total Mensa:</string>    
+    <string name="totalMensaLabel">Total Mensa:</string>
+    <string name="refresh">Aktualisieren</string>  
 
 </resources>
