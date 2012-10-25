@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import ch.hsr.hsrbuddy.R;
 import ch.hsr.hsrbuddy.view.TouchImageView;
 
-public class MapActivityBuildingOne extends Activity {
+public class MapActivityDetail extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle b = getIntent().getExtras();
         TouchImageView img = new TouchImageView(this);
-        Bitmap snoop = BitmapFactory.decodeResource(getResources(), R.drawable.detail_building_1);
-        img.setImageBitmap(snoop);
-        img.setMaxZoom(4f);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(),  (Integer) b.get("imageId"));
+        img.setImageBitmap(bm);
         setContentView(img);
     }
 

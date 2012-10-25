@@ -27,9 +27,11 @@ public class MapActivity extends Activity {
 	}
 	
 	private void changeMap(int id){
+		Intent intent = new Intent(this, MapActivityDetail.class);
 		if(id == R.id.building1){
-	        startActivity(new Intent(this, MapActivityBuildingOne.class));
+			intent.putExtra("imageId", R.drawable.detail_building_1);
 		}
+        startActivity(intent);
 	}
 	
 	@Override
