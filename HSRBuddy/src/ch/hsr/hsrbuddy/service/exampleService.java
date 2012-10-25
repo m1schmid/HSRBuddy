@@ -1,32 +1,35 @@
 package ch.hsr.hsrbuddy.service;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
+import android.util.Log;
 
+public class ExampleService extends IntentService {
 
+	private boolean running = true;
 
-public class exampleService extends Service {
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		return null;
+	public ExampleService() {
+		super("ExampleService");
 	}
 
 	@Override
-	public void onCreate() {
-		// TODO Auto-generated method stub
-		super.onCreate();
+	protected void onHandleIntent(Intent intent) {
+		while (running) {
+			Log.i("Service", "sleeping");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO Auto-generated method stub
-		return super.onStartCommand(intent, flags, startId);
+	public void onDestroy() {
+		Log.i("Andreas", "Haaalt STOP!");
+		running = false;
+		super.onDestroy();
 	}
-	
-	
-
 
 }
