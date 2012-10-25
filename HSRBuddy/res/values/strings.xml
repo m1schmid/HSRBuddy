@@ -28,6 +28,7 @@
     <string name="totalLabel">Gesamttotal:</string>
     <string name="totaPrinterlLabel">Total Drucker:</string>
     <string name="totalMensaLabel">Total Mensa:</string>
+    <string name="refresh">Aktualisieren</string>
     <string name="title_activity_map_activity_building_one">MapActivityBuildingOne</string>
 
 </resources>
