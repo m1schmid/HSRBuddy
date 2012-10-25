@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import ch.hsr.hsrbuddy.R;
 import ch.hsr.hsrbuddy.domain.MenuplanCrawler;
@@ -77,6 +79,7 @@ public class MenuActivity extends Activity {
 			rootLayout.removeAllViews();
 			
 			HorizontalSwipeLayout swipeLayout = new HorizontalSwipeLayout(rootLayout.getContext());
+			swipeLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			ArrayList<View> menuplanViews = createMenuplanViews(swipeLayout.getContext());
 			swipeLayout.setViewItems(menuplanViews);
 
