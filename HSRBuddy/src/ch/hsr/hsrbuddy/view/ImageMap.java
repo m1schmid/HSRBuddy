@@ -24,6 +24,7 @@ import java.util.HashMap;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
@@ -38,6 +39,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.FloatMath;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
@@ -79,8 +82,9 @@ public class ImageMap extends ImageView {
 	private Scroller mScroller;
 
 	private boolean mIsBeingDragged = false;	
-	
-	HashMap<Integer,TouchPoint> mTouchPoints = new HashMap<Integer,TouchPoint>();
+
+	SparseArray<TouchPoint> mTouchPoints= new SparseArray<TouchPoint>();
+	//HashMap<Integer,TouchPoint> mTouchPoints = new HashMap<Integer,TouchPoint>();
 	TouchPoint mMainTouch=null;
 	TouchPoint mPinchTouch=null;
 	
@@ -140,13 +144,15 @@ public class ImageMap extends ImageView {
 	 * containers for the image map areas
 	 */
 	ArrayList<Area> mAreaList=new ArrayList<Area>();
-	HashMap<Integer,Area> mIdToArea= new HashMap<Integer,Area>();
+	SparseArray<Area> mIdToArea= new SparseArray<Area>();
+	//HashMap<Integer,Area> mIdToArea= new HashMap<Integer,Area>();
 	
 	// click handler list
 	ArrayList<OnImageMapClickedHandler> mCallbackList;
 	
 	// list of open info bubbles
-	HashMap<Integer,Bubble> mBubbleMap = new HashMap<Integer,Bubble>();
+	//HashMap<Integer,Bubble> mBubbleMap = new HashMap<Integer,Bubble>();
+	SparseArray<Bubble> mBubbleMap= new SparseArray<Bubble>();
 
 	
 	
@@ -672,9 +678,12 @@ public class ImageMap extends ImageView {
 	}
 	
 	protected void drawBubbles(Canvas canvas) {
-		for (Bubble b : mBubbleMap.values()) {
-			b.onDraw(canvas);
+		for (int i = 0; i <  mBubbleMap.size(); i++) {
+			mBubbleMap.get(i).onDraw(canvas);
 		}
+//		for (Bubble b : mBubbleMap.values()) {
+//			b.onDraw(canvas);
+//		}
 	}
 	
 	protected void drawLocations(Canvas canvas) {
@@ -733,9 +742,12 @@ public class ImageMap extends ImageView {
 			// events.  Whenever ACTION_DOWN happens, it is intended
 			// to always be the first touch, so we will drop tracking
 			// for any points that may have been orphaned
-			for ( TouchPoint t: mTouchPoints.values() ) {
-				onLostTouch(t.getTrackingPointer());
+			for (int i = 0; i < mTouchPoints.size(); i++) {
+				onLostTouch(mTouchPoints.get(i).getTrackingPointer());
 			}
+//			for ( TouchPoint t: mTouchPoints.values() ) {
+//				onLostTouch(t.getTrackingPointer());
+//			}
 			// fall through planned
 		case MotionEvent.ACTION_POINTER_DOWN:
 			id = ev.getPointerId(index);
@@ -764,9 +776,13 @@ public class ImageMap extends ImageView {
 			// according to the google devs, CANCEL means cancel 
 			// tracking every touch.  
 			// cf: http://groups.google.com/group/android-developers/browse_thread/thread/8b14591ead5608a0/ad711bf24520e5c4?pli=1
-			for ( TouchPoint t: mTouchPoints.values() ) {
-				onLostTouch(t.getTrackingPointer());
+
+			for (int i = 0; i < mTouchPoints.size(); i++) {
+				onLostTouch(mTouchPoints.get(i).getTrackingPointer());
 			}
+//			for ( TouchPoint t: mTouchPoints.values() ) {
+//				onLostTouch(t.getTrackingPointer());
+//			}
 			// let go of the velocity tracker per API Docs
 			if (mVelocityTracker != null) {
 				mVelocityTracker.recycle();
@@ -937,13 +953,21 @@ public class ImageMap extends ImageView {
 	 */
 	TouchPoint getUnboundPoint() {
 		TouchPoint ret=null;		
-		for (Integer i : mTouchPoints.keySet()) {
+
+		for (int i = 0; i < mTouchPoints.size(); i++) {
 			TouchPoint p = mTouchPoints.get(i);
 			if ((p!=mMainTouch)&&(p!=mPinchTouch)) {
 				ret = p;
 				break;
 			}
 		}
+//		for (Integer i : mTouchPoints.keySet()) {
+//			TouchPoint p = mTouchPoints.get(i);
+//			if ((p!=mMainTouch)&&(p!=mPinchTouch)) {
+//				ret = p;
+//				break;
+//			}
+//		}
 		return ret;
 	}
 	
@@ -999,7 +1023,7 @@ public class ImageMap extends ImageView {
 	 		// check pinch distance, set new scale factor
 			float dx=mMainTouch.getX()-mPinchTouch.getX();
 			float dy=mMainTouch.getY()-mPinchTouch.getY();
-			float newDistance=(float)Math.sqrt((dx*dx)+(dy*dy));
+			float newDistance=(float)FloatMath.sqrt((dx*dx)+(dy*dy));
 			if (mZoomEstablished) {		
 				// baseline was set, check to see if there is enough
 				// movement to resize
@@ -1040,7 +1064,8 @@ public class ImageMap extends ImageView {
 		// check if bubble tapped first
 		// in case a bubble covers an area we want it to 
 		// have precedent
-		for (Bubble b : mBubbleMap.values()) {
+		for (int i = 0; i <  mBubbleMap.size(); i++) {
+			Bubble b = mBubbleMap.get(i);
 			if (b.isInArea((float)x-mScrollLeft,(float)y-mScrollTop)) {
 				b.onTapped();
 				bubble=true;
@@ -1049,6 +1074,15 @@ public class ImageMap extends ImageView {
 				break;
 			}
 		}
+//		for (Bubble b : mBubbleMap.values()) {
+//			if (b.isInArea((float)x-mScrollLeft,(float)y-mScrollTop)) {
+//				b.onTapped();
+//				bubble=true;
+//				missed=false;
+//				// only fire tapped for one bubble
+//				break;
+//			}
+//		}
 		
 		if (!bubble) {
 			// then check for area taps
@@ -1434,7 +1468,7 @@ public class ImageMap extends ImageView {
 			float dy = _y-y;
 			
 			// if tap is less than radius distance from the center
-			float d = (float)Math.sqrt((dx*dx)+(dy*dy));
+			float d = (float)FloatMath.sqrt((dx*dx)+(dy*dy));
 			if (d<_radius) {
 				ret = true;
 			}
@@ -1525,6 +1559,7 @@ public class ImageMap extends ImageView {
 			return ret;
 		}
 		
+		@SuppressLint("DrawAllocation")
 		void onDraw(Canvas canvas) {
 			if (_a != null) {
 				// Draw a shadow of the bubble

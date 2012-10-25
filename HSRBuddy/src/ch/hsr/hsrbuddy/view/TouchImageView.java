@@ -1,22 +1,26 @@
+/*
+ * TouchImageView.java
+ * By: Michael Ortiz
+ * Updated By: Patrick Lackemacher
+ * -------------------
+ * Extends Android ImageView to include pinch zooming and panning.
+ */
+
 package ch.hsr.hsrbuddy.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.util.FloatMath;
-import android.util.Log;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
-import ch.hsr.hsrbuddy.event.WrapMotionEvent;
 
 public class TouchImageView extends ImageView {
 
-    private static final String TAG = "Touch";
-    // These matrices will be used to move and zoom image
     Matrix matrix = new Matrix();
-    Matrix savedMatrix = new Matrix();
 
     // We can be in one of these 3 states
     static final int NONE = 0;
@@ -25,154 +29,215 @@ public class TouchImageView extends ImageView {
     int mode = NONE;
 
     // Remember some things for zooming
+    PointF last = new PointF();
     PointF start = new PointF();
-    PointF mid = new PointF();
-    float oldDist = 1f;
-
+    float minScale = 1f;
+    float maxScale = 3f;
+    float[] m;
+    
+    float redundantXSpace, redundantYSpace;
+    
+    float width, height;
+    static final int CLICK = 3;
+    float saveScale = 1f;
+    float right, bottom, origWidth, origHeight, bmWidth, bmHeight;
+    
+    ScaleGestureDetector mScaleDetector;
+    
     Context context;
 
     public TouchImageView(Context context) {
         super(context);
-        super.setClickable(true);
+        sharedConstructing(context);
+    }
+    
+    public TouchImageView(Context context, AttributeSet attrs) {
+    	super(context, attrs);
+    	sharedConstructing(context);
+    }
+    
+    private void sharedConstructing(Context context) {
+    	super.setClickable(true);
         this.context = context;
-
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         matrix.setTranslate(1f, 1f);
+        m = new float[9];
         setImageMatrix(matrix);
         setScaleType(ScaleType.MATRIX);
 
         setOnTouchListener(new OnTouchListener() {
 
-            public boolean onTouch(View v, MotionEvent rawEvent) {
-                WrapMotionEvent event = WrapMotionEvent.wrap(rawEvent);
+            public boolean onTouch(View v, MotionEvent event) {
+            	mScaleDetector.onTouchEvent(event);
 
-                dumpEvent(event);
-
-                // Handle touch events here...
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                case MotionEvent.ACTION_DOWN:
-                    savedMatrix.set(matrix);
-                    start.set(event.getX(), event.getY());
-                    Log.d(TAG, "mode=DRAG");
-                    mode = DRAG;
-                    break;
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    oldDist = spacing(event);
-                    Log.d(TAG, "oldDist=" + oldDist);
-                    if (oldDist > 10f) {
-                        savedMatrix.set(matrix);
-                        midPoint(mid, event);
-                        mode = ZOOM;
-                        Log.d(TAG, "mode=ZOOM");
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    int xDiff = (int) Math.abs(event.getX() - start.x);
-                    int yDiff = (int) Math.abs(event.getY() - start.y);
-                    if (xDiff < 8 && yDiff < 8){
-                        performClick();
-                    }
-                case MotionEvent.ACTION_POINTER_UP:
-                    mode = NONE;
-                    Log.d(TAG, "mode=NONE");
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    if (mode == DRAG) {
-                        // ...
-                        matrix.set(savedMatrix);
-                        matrix.postTranslate(event.getX() - start.x, event.getY() - start.y);
-                    } else if (mode == ZOOM) {
-                        float newDist = spacing(event);
-                        Log.d(TAG, "newDist=" + newDist);
-                        if (newDist > 10f) {
-                            matrix.set(savedMatrix);
-                            float scale = newDist / oldDist;
-                            matrix.postScale(scale, scale, mid.x, mid.y);
-                        }
-                    }
-                    break;
-                }
-
+            	matrix.getValues(m);
+            	float x = m[Matrix.MTRANS_X];
+            	float y = m[Matrix.MTRANS_Y];
+            	PointF curr = new PointF(event.getX(), event.getY());
+            	
+            	switch (event.getAction()) {
+	            	case MotionEvent.ACTION_DOWN:
+	                    last.set(event.getX(), event.getY());
+	                    start.set(last);
+	                    mode = DRAG;
+	                    break;
+	            	case MotionEvent.ACTION_MOVE:
+	            		if (mode == DRAG) {
+	            			float deltaX = curr.x - last.x;
+	            			float deltaY = curr.y - last.y;
+	            			float scaleWidth = Math.round(origWidth * saveScale);
+	            			float scaleHeight = Math.round(origHeight * saveScale);
+            				if (scaleWidth < width) {
+	            				deltaX = 0;
+	            				if (y + deltaY > 0)
+		            				deltaY = -y;
+	            				else if (y + deltaY < -bottom)
+		            				deltaY = -(y + bottom); 
+            				} else if (scaleHeight < height) {
+	            				deltaY = 0;
+	            				if (x + deltaX > 0)
+		            				deltaX = -x;
+		            			else if (x + deltaX < -right)
+		            				deltaX = -(x + right);
+            				} else {
+	            				if (x + deltaX > 0)
+		            				deltaX = -x;
+		            			else if (x + deltaX < -right)
+		            				deltaX = -(x + right);
+		            			
+	            				if (y + deltaY > 0)
+		            				deltaY = -y;
+		            			else if (y + deltaY < -bottom)
+		            				deltaY = -(y + bottom);
+	            			}
+                        	matrix.postTranslate(deltaX, deltaY);
+                        	last.set(curr.x, curr.y);
+	                    }
+	            		break;
+	            		
+	            	case MotionEvent.ACTION_UP:
+	            		mode = NONE;
+	            		int xDiff = (int) Math.abs(curr.x - start.x);
+	                    int yDiff = (int) Math.abs(curr.y - start.y);
+	                    if (xDiff < CLICK && yDiff < CLICK)
+	                        performClick();
+	            		break;
+	            		
+	            	case MotionEvent.ACTION_POINTER_UP:
+	            		mode = NONE;
+	            		break;
+            	}
                 setImageMatrix(matrix);
+                invalidate();
                 return true; // indicate event was handled
             }
 
         });
     }
 
-
-    public void setImage(Bitmap bm, int displayWidth, int displayHeight) { 
+    @Override
+    public void setImageBitmap(Bitmap bm) { 
         super.setImageBitmap(bm);
-
+        if(bm != null) {
+        	bmWidth = bm.getWidth();
+        	bmHeight = bm.getHeight();
+        }
+    }
+    
+    public void setMaxZoom(float x)
+    {
+    	maxScale = x;
+    }
+    
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+    	@Override
+    	public boolean onScaleBegin(ScaleGestureDetector detector) {
+    		mode = ZOOM;
+    		return true;
+    	}
+    	
+		@Override
+	    public boolean onScale(ScaleGestureDetector detector) {
+			float mScaleFactor = detector.getScaleFactor();
+		 	float origScale = saveScale;
+	        saveScale *= mScaleFactor;
+	        if (saveScale > maxScale) {
+	        	saveScale = maxScale;
+	        	mScaleFactor = maxScale / origScale;
+	        } else if (saveScale < minScale) {
+	        	saveScale = minScale;
+	        	mScaleFactor = minScale / origScale;
+	        }
+        	right = width * saveScale - width - (2 * redundantXSpace * saveScale);
+            bottom = height * saveScale - height - (2 * redundantYSpace * saveScale);
+        	if (origWidth * saveScale <= width || origHeight * saveScale <= height) {
+        		matrix.postScale(mScaleFactor, mScaleFactor, width / 2, height / 2);
+            	if (mScaleFactor < 1) {
+            		matrix.getValues(m);
+            		float x = m[Matrix.MTRANS_X];
+                	float y = m[Matrix.MTRANS_Y];
+                	if (mScaleFactor < 1) {
+        	        	if (Math.round(origWidth * saveScale) < width) {
+        	        		if (y < -bottom)
+            	        		matrix.postTranslate(0, -(y + bottom));
+        	        		else if (y > 0)
+            	        		matrix.postTranslate(0, -y);
+        	        	} else {
+	                		if (x < -right) 
+	        	        		matrix.postTranslate(-(x + right), 0);
+	                		else if (x > 0) 
+	        	        		matrix.postTranslate(-x, 0);
+        	        	}
+                	}
+            	}
+        	} else {
+            	matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
+            	matrix.getValues(m);
+            	float x = m[Matrix.MTRANS_X];
+            	float y = m[Matrix.MTRANS_Y];
+            	if (mScaleFactor < 1) {
+    	        	if (x < -right) 
+    	        		matrix.postTranslate(-(x + right), 0);
+    	        	else if (x > 0) 
+    	        		matrix.postTranslate(-x, 0);
+    	        	if (y < -bottom)
+    	        		matrix.postTranslate(0, -(y + bottom));
+    	        	else if (y > 0)
+    	        		matrix.postTranslate(0, -y);
+            	}
+        	}
+	        return true;
+	        
+	    }
+	}
+    
+    @Override
+    protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec)
+    {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        width = MeasureSpec.getSize(widthMeasureSpec);
+        height = MeasureSpec.getSize(heightMeasureSpec);
         //Fit to screen.
         float scale;
-        if ((displayHeight / bm.getHeight()) >= (displayWidth / bm.getWidth())){
-            scale =  (float)displayWidth / (float)bm.getWidth();
-        } else {
-            scale = (float)displayHeight / (float)bm.getHeight();
-        }
-
-        savedMatrix.set(matrix);
-        matrix.set(savedMatrix);
-        matrix.postScale(scale, scale, mid.x, mid.y);
+        float scaleX =  (float)width / (float)bmWidth;
+        float scaleY = (float)height / (float)bmHeight;
+        scale = Math.min(scaleX, scaleY);
+        matrix.setScale(scale, scale);
         setImageMatrix(matrix);
-
+        saveScale = 1f;
 
         // Center the image
-        float redundantYSpace = (float)displayHeight - (scale * (float)bm.getHeight()) ;
-        float redundantXSpace = (float)displayWidth - (scale * (float)bm.getWidth());
-
+        redundantYSpace = (float)height - (scale * (float)bmHeight) ;
+        redundantXSpace = (float)width - (scale * (float)bmWidth);
         redundantYSpace /= (float)2;
         redundantXSpace /= (float)2;
 
-
-        savedMatrix.set(matrix);
-        matrix.set(savedMatrix);
         matrix.postTranslate(redundantXSpace, redundantYSpace);
+        
+        origWidth = width - 2 * redundantXSpace;
+        origHeight = height - 2 * redundantYSpace;
+        right = width * saveScale - width - (2 * redundantXSpace * saveScale);
+        bottom = height * saveScale - height - (2 * redundantYSpace * saveScale);
         setImageMatrix(matrix);
-    }
-
-
-    /** Show an event in the LogCat view, for debugging */
-    private void dumpEvent(WrapMotionEvent event) {
-        // ...
-        String names[] = { "DOWN", "UP", "MOVE", "CANCEL", "OUTSIDE",
-            "POINTER_DOWN", "POINTER_UP", "7?", "8?", "9?" };
-        StringBuilder sb = new StringBuilder();
-        int action = event.getAction();
-        int actionCode = action & MotionEvent.ACTION_MASK;
-        sb.append("event ACTION_").append(names[actionCode]);
-        if (actionCode == MotionEvent.ACTION_POINTER_DOWN
-                || actionCode == MotionEvent.ACTION_POINTER_UP) {
-            sb.append("(pid ").append(
-                    action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
-            sb.append(")");
-        }
-        sb.append("[");
-        for (int i = 0; i < event.getPointerCount(); i++) {
-            sb.append("#").append(i);
-            sb.append("(pid ").append(event.getPointerId(i));
-            sb.append(")=").append((int) event.getX(i));
-            sb.append(",").append((int) event.getY(i));
-            if (i + 1 < event.getPointerCount())
-            sb.append(";");
-        }
-        sb.append("]");
-        Log.d(TAG, sb.toString());
-    }
-
-    /** Determine the space between the first two fingers */
-    private float spacing(WrapMotionEvent event) {
-        // ...
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
-    }
-
-    /** Calculate the mid point of the first two fingers */
-    private void midPoint(PointF point, WrapMotionEvent event) {
-        // ...
-        float x = event.getX(0) + event.getX(1);
-        float y = event.getY(0) + event.getY(1);
-        point.set(x / 2, y / 2);
     }
 }

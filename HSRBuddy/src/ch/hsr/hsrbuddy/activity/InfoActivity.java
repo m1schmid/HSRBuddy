@@ -1,11 +1,9 @@
 package ch.hsr.hsrbuddy.activity;
 
-import ch.hsr.hsrbuddy.R;
-import ch.hsr.hsrbuddy.R.layout;
-import ch.hsr.hsrbuddy.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import ch.hsr.hsrbuddy.R;
 
 public class InfoActivity extends Activity {
 
