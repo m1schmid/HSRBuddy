@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import ch.hsr.hsrbuddy.R;
+import ch.hsr.hsrbuddy.activity.map.MapActivity;
 
 public class MainActivity extends Activity {
 
