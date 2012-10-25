@@ -12,8 +12,9 @@ public class MapActivityDetail extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
+        int imageId = (Integer) b.get("imageId");
         TouchImageView img = new TouchImageView(this);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),  (Integer) b.get("imageId"));
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), imageId);
         img.setImageBitmap(bm);
         setContentView(img);
     }

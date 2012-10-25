@@ -28,9 +28,26 @@ public class MapActivity extends Activity {
 	
 	private void changeMap(int id){
 		Intent intent = new Intent(this, MapActivityDetail.class);
-		if(id == R.id.building1){
-			intent.putExtra("imageId", R.drawable.detail_building_1);
-		}
+		Integer buildingId = 0;
+    	switch (id)
+    	{
+    		case R.id.building1:
+    			buildingId = R.drawable.schulgebaeude_og;
+    	        break;
+    		case R.id.building2:
+    			buildingId = R.drawable.laborgebaeude_eg;
+    	        break;
+    		case R.id.building3:
+    			buildingId = R.drawable.hoersaalgebaeude_eg;
+    	        break;
+    		case R.id.building4:
+    			buildingId = R.drawable.verwaltungsgebaeude_og;
+    	        break;
+    		case R.id.building5:
+    			buildingId = R.drawable.foyergebaeude_eg;
+    	        break;
+    	}
+		intent.putExtra("imageId", buildingId);
         startActivity(intent);
 	}
 	

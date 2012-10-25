@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <maps xmlns:android="http://schemas.android.com/apk/res/android">
     <map name="hsrmap">
-        <area name="Gebaeude 1" shape="rect" coords="180,460,480,575" id="@+id/building1"/>
+        <area name="Gebaeude 1" shape="rect" coords="240,750,580,880" id="@+id/building1"/>
+        <area name="Gebaeude 2" shape="rect" coords="300,900,530,1100" id="@+id/building2"/>
+        <area name="Gebaeude 3" shape="rect" coords="50,630,220,850" id="@+id/building3"/>
+        <area name="Gebaeude 4" shape="rect" coords="440,430,580,680" id="@+id/building4"/>
+        <area name="Gebaeude 5" shape="rect" coords="620,650,750,840" id="@+id/building5"/>
 	</map>
 </maps>
