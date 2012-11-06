@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
@@ -26,6 +27,7 @@ public class MenuActivity extends Activity {
 	private ProgressDialog mDialog;
 	private MenuplanList menuplanList = new MenuplanList();
 	private RelativeLayout rootLayout;
+	private boolean manualRefresh = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,11 +40,7 @@ public class MenuActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		mDialog = new ProgressDialog(this);
-		mDialog.setMessage(LOADING_MESSAGE);
-		mDialog.setCancelable(true);
-		mDialog.show();
-
+		showLoadingDialog();
 		new Thread(crawlMenuplan, "crawlMenuplanWebsite").start();
 	}
 
@@ -52,6 +50,26 @@ public class MenuActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menuplan_refresh:
+			manualRefresh = true;
+			showLoadingDialog();
+			new Thread(crawlMenuplan, "crawlMenuplanWebsite").start();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void showLoadingDialog() {
+		mDialog = new ProgressDialog(this);
+		mDialog.setMessage(LOADING_MESSAGE);
+		mDialog.setCancelable(true);
+		mDialog.show();
+	}
+	
 	private final Runnable crawlMenuplan = new Runnable() {
 		public void run() {
 			initMenuplanList();
@@ -61,19 +79,20 @@ public class MenuActivity extends Activity {
 		private void initMenuplanList() {
 			String filePath = getFilesDir() + "/" + MENUPLAN_FILENAME;
 
-			if (Persistency.wasModifiedThisWeek(filePath)) {
+			if (Persistency.wasModifiedThisWeek(filePath) && !manualRefresh) {
 				Object obj = Persistency.readFile(filePath);
 				if (obj instanceof MenuplanList)
 					menuplanList = (MenuplanList) obj;
 			}
-			if (menuplanList.size() == 0) {
+			if (menuplanList.size() == 0 || manualRefresh) {
 				menuplanList = MenuplanCrawler.getMenuplans();
 				Persistency.writeFile(menuplanList, filePath);
+				manualRefresh = false;
 			}
 		}
 	};
 
-	final Runnable updateUI = new Runnable() {
+	private final Runnable updateUI = new Runnable() {
 		public void run() {
 			rootLayout.removeAllViews();
 			
