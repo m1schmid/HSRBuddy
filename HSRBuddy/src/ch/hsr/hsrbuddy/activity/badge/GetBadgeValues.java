@@ -25,141 +25,162 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import ch.hsr.hsrbuddy.activity.BadgeActivity;
 
 public class GetBadgeValues extends Thread {
-	
-	private BadgeActivity badgeActivity;
 
-	public GetBadgeValues(BadgeActivity badgeActivity) {
+	private BadgeActivity badgeActivity;
+	private String username;
+	private String password;
+
+	public GetBadgeValues(BadgeActivity badgeActivity, String username, String password) {
 		this.badgeActivity = badgeActivity;
+		this.username = username;
+		this.password = password;
 	}
-	
+
 	public void run() {
 		System.out.println("The Thread getBadgeValues has been started.");
-					
+
 		HttpResponse httpResponse = makeHttpsRequest();
-		String response = processHttpResponse(httpResponse);	
+		String response = processHttpResponse(httpResponse);
 		BadgeValues rcvdBadgeValues = extractJSON(response);
 		badgeActivity.setBadgeValues(rcvdBadgeValues);
 		System.out.println("The variables have been set.");
-		
+
 		badgeActivity.updateUI();
 		System.out.println("The Thread getBadgeValues ended.");
 	}
-		
-	private HttpResponse makeHttpsRequest(){
-	    DefaultHttpClient httpClient = getNewHttpClient();
 
-	    //TODO: Ask for Username PW in activity and store it somewhere intelligent
-		String username = "SIFSV-80018\\ChallPUser";
-		String password = "1q$2w$3e$4r$5t";
-		httpClient.getCredentialsProvider().setCredentials(new AuthScope(null, -1), new UsernamePasswordCredentials(username,password));
-	  
-	    final String url = "https://152.96.80.18/VerrechnungsportalService.svc/json/getBadgeSaldo";
-	    HttpGet httpGet = new HttpGet(url);
-	    HttpResponse response = null;
-	    try {      	
+	private HttpResponse makeHttpsRequest() {
+		DefaultHttpClient httpClient = getNewHttpClient();
+
+		// String username = "SIFSV-80018\\ChallPUser";
+		// String password = "1q$2w$3e$4r$5t";
+		username = "hsr\\" + username;
+		
+		System.out.println("Username and PW for login was: " + username + " " + password);
+
+		httpClient.getCredentialsProvider().setCredentials(
+				new AuthScope(null, -1),
+				new UsernamePasswordCredentials(username, password));
+
+		// final String url =
+		// "https://152.96.80.18/VerrechnungsportalService.svc/json/getBadgeSaldo";
+		final String url = "https://verrechnungsportal.hsr.ch:4450/VerrechnungsportalService.svc/JSON/getBadgeSaldo";
+
+		HttpGet httpGet = new HttpGet(url);
+		HttpResponse response = null;
+		try {
 			response = httpClient.execute(httpGet);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    return response;
+		return response;
 	}
-	
-    /*
-     * Returns a DefaultHttpClient with MySSLSocketFactory which accepts every certificate.
-     * This would have been an alternative --> http://android-developers.blogspot.ch/2011/09/androids-http-clients.html
-     */
-    private DefaultHttpClient getNewHttpClient() {
-        try {
-            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
 
-            SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-            sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+	/*
+	 * Returns a DefaultHttpClient with MySSLSocketFactory which accepts every
+	 * certificate. This would have been an alternative -->
+	 * http://android-developers.blogspot.ch/2011/09/androids-http-clients.html
+	 */
+	private DefaultHttpClient getNewHttpClient() {
+		try {
+			KeyStore trustStore = KeyStore.getInstance(KeyStore
+					.getDefaultType());
+			trustStore.load(null, null);
 
-            HttpParams params = new BasicHttpParams();
-            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-            HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+			SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
-            SchemeRegistry registry = new SchemeRegistry();
-            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-            registry.register(new Scheme("https", sf, 443));
+			HttpParams params = new BasicHttpParams();
+			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
-            ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
+			SchemeRegistry registry = new SchemeRegistry();
+			registry.register(new Scheme("http", PlainSocketFactory
+					.getSocketFactory(), 80));
+			registry.register(new Scheme("https", sf, 443));
 
-            return new DefaultHttpClient(ccm, params);
-        } catch (Exception e) {
-        	System.out.println("Exception, returned DefaultHttpClient()");
-            return new DefaultHttpClient();
-        }
-    }
-	
-    public String processHttpResponse(HttpResponse response){
-    	String result = "";
-    	StringBuilder sB = new StringBuilder();
-    	StatusLine statusLine = response.getStatusLine();
-    	if(statusLine.getStatusCode() == 200){
-    		
-        	HttpEntity entity = response.getEntity();
-        	InputStream content;
-        	BufferedReader reader;
-        	
+			ClientConnectionManager ccm = new ThreadSafeClientConnManager(
+					params, registry);
+
+			return new DefaultHttpClient(ccm, params);
+		} catch (Exception e) {
+			System.out.println("Exception, returned DefaultHttpClient()");
+			return new DefaultHttpClient();
+		}
+	}
+
+	public String processHttpResponse(HttpResponse response) {
+		String result = "";
+		StringBuilder sB = new StringBuilder();
+		StatusLine statusLine = response.getStatusLine();
+		if (statusLine.getStatusCode() == 200) {
+
+			HttpEntity entity = response.getEntity();
+			InputStream content;
+			BufferedReader reader;
+
 			try {
 				content = entity.getContent();
-	        	reader = new BufferedReader(new InputStreamReader(content));
-	         	String line;
-	        	while((line = reader.readLine()) != null){
-	        		sB.append(line);
-	        	}
-	        	result = sB.toString();
+				reader = new BufferedReader(new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					sB.append(line);
+				}
+				result = sB.toString();
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-    	} else {
-    		//TODO: Exception Handling
-    		System.out.println("EXCEPTION!!!");
-    		System.out.println(statusLine.getStatusCode());
-    		System.out.println(statusLine.getReasonPhrase());
-    	}
-    	
-    	return result;
-    }
-    
-    private BadgeValues extractJSON(String response){
-    	BadgeValues badgeValues = new BadgeValues();
-    	
-//    	//Working Example Peter M JSON API
-//    	try{
-//			JSONObject jsonObj = new JSONObject(response);
-//			JSONArray jsonArray = jsonObj.getJSONArray("menus");
-//			for (int i = 0; i < jsonArray.length(); i++) {
-//				JSONObject subJSONObj = jsonArray.getJSONObject(i);
-//				String price = subJSONObj.getString("price_external");
-//			}
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-    	
-    	//Temporary JSON API HSR
-    	try{
+
+		} else {
+			// TODO: Exception Handling
+			System.out.println("EXCEPTION!!!");
+			System.out.println(statusLine.getStatusCode());
+			System.out.println(statusLine.getReasonPhrase());
+			if (statusLine.getStatusCode() == 401) {
+				System.out.println("Username or Password wrong!");
+				// TODO: show this in gui
+				badgeActivity.showWrongPassword();
+			}
+		}
+
+		return result;
+	}
+
+	private BadgeValues extractJSON(String response) {
+		BadgeValues badgeValues = new BadgeValues();
+
+		// //Working Example Peter M JSON API
+		// try{
+		// JSONObject jsonObj = new JSONObject(response);
+		// JSONArray jsonArray = jsonObj.getJSONArray("menus");
+		// for (int i = 0; i < jsonArray.length(); i++) {
+		// JSONObject subJSONObj = jsonArray.getJSONObject(i);
+		// String price = subJSONObj.getString("price_external");
+		// }
+		// } catch (JSONException e) {
+		// e.printStackTrace();
+		// }
+
+		// Temporary JSON API HSR
+		try {
 			JSONObject jsonObj = new JSONObject(response);
-			double balance = Double.parseDouble(jsonObj.getString("badgeSaldo"));
+			double balance = Double
+					.parseDouble(jsonObj.getString("badgeSaldo"));
 			badgeValues.setLatestBalance(balance);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-    	
-    	return badgeValues;
-    }    
+
+		return badgeValues;
+	}
 }
