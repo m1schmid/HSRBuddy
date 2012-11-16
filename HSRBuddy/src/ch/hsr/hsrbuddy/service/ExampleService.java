@@ -6,6 +6,7 @@ import android.util.Log;
 
 public class ExampleService extends IntentService {
 
+	//TODO: Remove in final code
 	private boolean running = true;
 
 	public ExampleService() {
