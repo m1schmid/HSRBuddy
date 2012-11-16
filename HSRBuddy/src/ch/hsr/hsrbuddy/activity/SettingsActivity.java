@@ -42,6 +42,7 @@ public class SettingsActivity extends Activity {
 		editor.commit();
 		
 		//TODO: is this ok? or am i starting several badge activites like that? --> I allready came from a badge act.
+		//TODO: relpace  BadgeActivity.class with the class the user came from.
 		startActivity(new Intent(this, BadgeActivity.class));
 	}
 	
