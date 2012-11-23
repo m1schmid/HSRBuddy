@@ -1,4 +1,5 @@
 package ch.hsr.hsrbuddy.activity.badge;
+//TODO: Refactore this whole package, atm it is totaly wrong
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,35 +29,40 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ch.hsr.hsrbuddy.activity.BadgeActivity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
-public class GetBadgeValues extends Thread {
+public class getBadgeValuesMain extends Thread {
 
-	private BadgeActivity badgeActivity;
 	private String username;
 	private String password;
 	private boolean hasFailed;
+	public static final String PREFS_NAME = "HSRBuddyPreferences";
+	SharedPreferences prefs;
 
-	public GetBadgeValues(BadgeActivity badgeActivity, String username, String password) {
-		this.badgeActivity = badgeActivity;
+	public getBadgeValuesMain(String username, String password, SharedPreferences prefs) {
 		this.username = username;
 		this.password = password;
+		this.prefs = prefs;
 	}
 
 	public void run() {
-		System.out.println("The Thread getBadgeValues has been started.");
+		System.out.println("The Thread getBadgeValuesMain has been started.");
 
 		HttpResponse httpResponse = makeHttpsRequest();
 		
 		if(!hasFailed){
 			String response = processHttpResponse(httpResponse);
 			BadgeValues rcvdBadgeValues = extractJSON(response);
-			badgeActivity.setBadgeValues(rcvdBadgeValues);
+			
+			Editor editor = prefs.edit();
+			editor.putFloat("MainBalance", (float)rcvdBadgeValues.getLatestBalance());
+			editor.commit();
+			
 			System.out.println("The variables have been set.");
 		}
 
-		badgeActivity.updateUI();
-		System.out.println("The Thread getBadgeValues ended.");
+		System.out.println("The Thread getBadgeValuesMain ended.");
 	}
 
 	private HttpResponse makeHttpsRequest() {
@@ -84,12 +90,12 @@ public class GetBadgeValues extends Thread {
 			System.out.println("URL unreachable");
 			e.printStackTrace();
 			hasFailed = true;
-			badgeActivity.showURLUnreachableDialog();
+//			badgeActivity.showURLUnreachableDialog();
 		} catch (IOException e) {
 			System.out.println("URL unreachable");
 			e.printStackTrace();
 			hasFailed = true;
-			badgeActivity.showURLUnreachableDialog();
+//			badgeActivity.showURLUnreachableDialog();
 		}
 		return response;
 	}
@@ -159,7 +165,7 @@ public class GetBadgeValues extends Thread {
 			if (statusLine.getStatusCode() == 401) {
 				System.out.println("Username or Password wrong!");
 				// TODO: show this in gui
-				badgeActivity.showWrongPassword();
+//				badgeActivity.showWrongPassword();
 			}
 		}
 

@@ -14,7 +14,6 @@ public class GetBadgeValuesMock extends Thread {
 	public void run() {
 		System.out.println("The Thread GetBadgeValuesMock has been started.");
 					
-		//TODO: get real balance from server
 		try {
 			//Simulate loading time
 			Thread.sleep(1500);

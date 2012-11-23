@@ -39,5 +39,6 @@
     <string name="credentialsSaveButton">Save</string>
     <string name="deleteCredsLabel">Gespeicherte Logindaten löschen:</string>
     <string name="credentialsDeleteButton">delete</string>
+    <string name="home_screen_balance">Kontostand: 0.0</string>
 
 </resources>

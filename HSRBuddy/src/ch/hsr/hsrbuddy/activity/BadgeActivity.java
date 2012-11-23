@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ch.hsr.hsrbuddy.R;
 import ch.hsr.hsrbuddy.activity.badge.BadgeValues;
-import ch.hsr.hsrbuddy.activity.badge.GetBadgeValues;
+import ch.hsr.hsrbuddy.activity.badge.GetBadgeValuesMock;
 
 public class BadgeActivity extends Activity {
 
@@ -57,29 +57,36 @@ public class BadgeActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		mDialog = new ProgressDialog(this);
-		mDialog.setMessage("Loading...");
-		mDialog.setCancelable(false);
-		mDialog.show();
-
-		
+	
 		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);	
 		username = prefs.getString("Username", "NOT_FOUND");
 		password = prefs.getString("Password", "NOT_FOUND");
+		System.out.println("Colin username="+username+" pw="+password);
+		
 		if(username.equals("NOT_FOUND") || password.equals("NOT_FOUND")){
 			startActivity(new Intent(this, SettingsActivity.class));
+		} else {
+			
+			mDialog = new ProgressDialog(this);
+			mDialog.setMessage("Loading...");
+			mDialog.setCancelable(false);
+			mDialog.show();
+			
+			/*
+			 * Starts a seperate thread which is absolutely detached to this
+			 * UI-thread. This thread contains heavy calculation which can be done
+			 * asynchronous.
+			 * 
+			 * GetBadgeValues Thread will not be used because the JSON API did not
+			 * provide enough data for this design. But you can use this thread
+			 * anyways if you want to see your badge balance.
+			 * 
+			 * GetBadgeValuesMock will be used in productive code to demonstrate
+			 * the design we had planned.
+			 */
+			 new GetBadgeValuesMock(this).start();
+			//new GetBadgeValues(this, username, password).start();
 		}
-		
-		/*
-		 * Starts a seperate thread which is absolutely detached to this
-		 * UI-thread. This thread contains heavy calculation which can be done
-		 * asynchronous.
-		 */
-
-		// new GetBadgeValuesMock(this).start();
-
-		new GetBadgeValues(this, username, password).start();
 	}
 
 	/*
@@ -100,6 +107,16 @@ public class BadgeActivity extends Activity {
 	final Runnable showWrongPasswordDialog = new Runnable(){
 		public void run(){	
 			Toast.makeText(getApplicationContext(), "Username or Password is wrong!", Toast.LENGTH_SHORT).show();
+		}
+	};
+	
+	public void showURLUnreachableDialog() {
+		badgeHandler.post(showURLUnreachableDialog);
+	}
+	
+	final Runnable showURLUnreachableDialog = new Runnable(){
+		public void run(){	
+			Toast.makeText(getApplicationContext(), "URL is unreachable. Are you inside HSR Network or VPN.", Toast.LENGTH_LONG).show();
 		}
 	};
 
@@ -166,8 +183,8 @@ public class BadgeActivity extends Activity {
 							.getLastUpdatedWholeBalance()));
 
 			mDialog.dismiss();
-
 			System.out.println("The values has been set in the UI.");
+			Toast.makeText(getApplicationContext(), "These are just dummy entries...", Toast.LENGTH_SHORT).show();
 		}
 	};
 
