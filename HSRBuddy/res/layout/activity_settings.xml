@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/settingsSecondLine"
-        android:onClick="startPollingService"
+        android:onClick="startPollingServiceViaButton"
         android:text="@string/start_service" />
 
     <Button

@@ -4,8 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import ch.hsr.hsrbuddy.activity.SettingsActivity;
-import ch.hsr.hsrbuddy.activity.badge.getBadgeValuesMain;
+import ch.hsr.hsrbuddy.activity.badge.getBadgeValues;
 
 public class BadgeService extends IntentService {
 	
@@ -15,7 +14,7 @@ public class BadgeService extends IntentService {
 
 	public BadgeService() {
 		super("BadgeService");
-		Log.i("BadgeService", "The BadgeService Thread has been created");
+		Log.d("BadgeService", "The BadgeService Thread has been created");
 	}
 
 	@Override
@@ -25,18 +24,17 @@ public class BadgeService extends IntentService {
 		password = prefs.getString("Password", "NOT_FOUND");
 		
 		if(username.equals("NOT_FOUND") || password.equals("NOT_FOUND")){
-			startActivity(new Intent(this, SettingsActivity.class));
+			//do nothing, user must find out that he must set password on his own
 		} else {
-			new getBadgeValuesMain(username, password, prefs).start();
+			new getBadgeValues(username, password, prefs).start();
 		}
-		
-		
-		Log.i("BadgeService", "The BadgeService Thread started the GetBadgeValuesMain Thread!");
+
+		Log.d("BadgeService", "The BadgeService Thread started the GetBadgeValues Thread!");
 	}
 
 	@Override
 	public void onDestroy() {
-		Log.i("BadgeService", "The BadgeService Thread has stopped");
+		Log.d("BadgeService", "The BadgeService Thread has stopped");
 		super.onDestroy();
 	}
 

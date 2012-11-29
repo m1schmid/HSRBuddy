@@ -28,52 +28,52 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ch.hsr.hsrbuddy.activity.BadgeActivity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
-public class GetBadgeValues extends Thread {
+public class getBadgeValues extends Thread {
 
-	private BadgeActivity badgeActivity;
 	private String username;
 	private String password;
 	private boolean hasFailed;
+	public static final String PREFS_NAME = "HSRBuddyPreferences";
+	SharedPreferences prefs;
 
-	public GetBadgeValues(BadgeActivity badgeActivity, String username, String password) {
-		this.badgeActivity = badgeActivity;
+	public getBadgeValues(String username, String password, SharedPreferences prefs) {
 		this.username = username;
 		this.password = password;
+		this.prefs = prefs;
 	}
 
 	public void run() {
-		System.out.println("The Thread getBadgeValues has been started.");
+		Log.d("getBadgeValues", "The Thread getBadgeValues has been started.");
 
 		HttpResponse httpResponse = makeHttpsRequest();
 		
 		if(!hasFailed){
 			String response = processHttpResponse(httpResponse);
 			BadgeValues rcvdBadgeValues = extractJSON(response);
-			badgeActivity.setBadgeValues(rcvdBadgeValues);
-			System.out.println("The variables have been set.");
+			
+			Editor editor = prefs.edit();
+			editor.putFloat("MainBalance", (float)rcvdBadgeValues.getLatestBalance());
+			editor.commit();
+			
+			Log.d("getBadgeValues", "The variables have been set.");
 		}
 
-		badgeActivity.updateUI();
-		System.out.println("The Thread getBadgeValues ended.");
+		Log.d("getBadgeValues", "The Thread getBadgeValues ended.");
 	}
 
 	private HttpResponse makeHttpsRequest() {
 		DefaultHttpClient httpClient = getNewHttpClient();
-
-		// String username = "SIFSV-80018\\ChallPUser";
-		// String password = "1q$2w$3e$4r$5t";
 		username = "hsr\\" + username;
-		
-		System.out.println("Username and PW for login was: " + username + " " + password);
+		Log.d("getBadgeValues", "Username and PW for login was: " + username + " " + password);
 
 		httpClient.getCredentialsProvider().setCredentials(
 				new AuthScope(null, -1),
 				new UsernamePasswordCredentials(username, password));
 
-		// final String url =
-		// "https://152.96.80.18/VerrechnungsportalService.svc/json/getBadgeSaldo";
 		final String url = "https://verrechnungsportal.hsr.ch:4450/VerrechnungsportalService.svc/JSON/getBadgeSaldo";
 
 		HttpGet httpGet = new HttpGet(url);
@@ -81,15 +81,13 @@ public class GetBadgeValues extends Thread {
 		try {
 			response = httpClient.execute(httpGet);
 		} catch (ClientProtocolException e) {
-			System.out.println("URL unreachable");
+			Log.d("getBadgeValues", "URL unreachable");
 			e.printStackTrace();
 			hasFailed = true;
-			badgeActivity.showURLUnreachableDialog();
 		} catch (IOException e) {
-			System.out.println("URL unreachable");
+			Log.d("getBadgeValues", "URL unreachable");
 			e.printStackTrace();
 			hasFailed = true;
-			badgeActivity.showURLUnreachableDialog();
 		}
 		return response;
 	}
@@ -122,7 +120,7 @@ public class GetBadgeValues extends Thread {
 
 			return new DefaultHttpClient(ccm, params);
 		} catch (Exception e) {
-			System.out.println("Exception, returned DefaultHttpClient()");
+			Log.d("getBadgeValues", "Exception, returned DefaultHttpClient()");
 			return new DefaultHttpClient();
 		}
 	}
@@ -152,36 +150,16 @@ public class GetBadgeValues extends Thread {
 			}
 
 		} else {
-			// TODO: Exception Handling
-			System.out.println("EXCEPTION!!!");
-			System.out.println(statusLine.getStatusCode());
-			System.out.println(statusLine.getReasonPhrase());
+			Log.d("getBadgeValues", "EXCEPTION!!! " + statusLine.getStatusCode() + " " + statusLine.getReasonPhrase());
 			if (statusLine.getStatusCode() == 401) {
-				System.out.println("Username or Password wrong!");
-				// TODO: show this in gui
-				badgeActivity.showWrongPassword();
+				Log.d("getBadgeValues", "Username or Password wrong!");
 			}
 		}
-
 		return result;
 	}
 
 	private BadgeValues extractJSON(String response) {
 		BadgeValues badgeValues = new BadgeValues();
-
-		// //Working Example Peter M JSON API
-		// try{
-		// JSONObject jsonObj = new JSONObject(response);
-		// JSONArray jsonArray = jsonObj.getJSONArray("menus");
-		// for (int i = 0; i < jsonArray.length(); i++) {
-		// JSONObject subJSONObj = jsonArray.getJSONObject(i);
-		// String price = subJSONObj.getString("price_external");
-		// }
-		// } catch (JSONException e) {
-		// e.printStackTrace();
-		// }
-
-		// Temporary JSON API HSR
 		try {
 			JSONObject jsonObj = new JSONObject(response);
 			double balance = Double
@@ -190,7 +168,6 @@ public class GetBadgeValues extends Thread {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
 		return badgeValues;
 	}
 }

@@ -54,17 +54,11 @@ public class MainActivity extends Activity {
 		case R.id.activity_menu:
 			startActivity(new Intent(this, MenuActivity.class));
 			break;
-		case R.id.activity_prices:
-			startActivity(new Intent(this, PriceActivity.class));
-			break;
 		case R.id.activity_map:
 			startActivity(new Intent(this, MapActivity.class));
 			break;
 		case R.id.activity_badge:
 			startActivity(new Intent(this, BadgeActivity.class));
-			break;
-		case R.id.activity_info:
-			startActivity(new Intent(this, InfoActivity.class));
 			break;
 		case R.id.activity_dates:
 			startActivity(new Intent(this, DatesActivity.class));

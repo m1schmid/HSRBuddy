@@ -7,9 +7,9 @@ import java.text.SimpleDateFormat;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -22,14 +22,10 @@ public class BadgeActivity extends Activity {
 
 	final Handler badgeHandler = new Handler();
 	private ProgressDialog mDialog;
-	//private Toast toast;
 	private DecimalFormat dFormat = new DecimalFormat("0.00");
 	private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
 	private BadgeValues badgeValues = new BadgeValues();
 	public static final int NUMBER_OF_LAST_PURCHASES = 3;
-	public static final String PREFS_NAME = "HSRBuddyPreferences";
-	private String username;
-	private String password;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,35 +54,23 @@ public class BadgeActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 	
-		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);	
-		username = prefs.getString("Username", "NOT_FOUND");
-		password = prefs.getString("Password", "NOT_FOUND");
-		System.out.println("Colin username="+username+" pw="+password);
+		mDialog = new ProgressDialog(this);
+		mDialog.setMessage("Loading...");
+		mDialog.setCancelable(false);
+		mDialog.show();
 		
-		if(username.equals("NOT_FOUND") || password.equals("NOT_FOUND")){
-			startActivity(new Intent(this, SettingsActivity.class));
-		} else {
-			
-			mDialog = new ProgressDialog(this);
-			mDialog.setMessage("Loading...");
-			mDialog.setCancelable(false);
-			mDialog.show();
-			
-			/*
-			 * Starts a seperate thread which is absolutely detached to this
-			 * UI-thread. This thread contains heavy calculation which can be done
-			 * asynchronous.
-			 * 
-			 * GetBadgeValues Thread will not be used because the JSON API did not
-			 * provide enough data for this design. But you can use this thread
-			 * anyways if you want to see your badge balance.
-			 * 
-			 * GetBadgeValuesMock will be used in productive code to demonstrate
-			 * the design we had planned.
-			 */
-			 new GetBadgeValuesMock(this).start();
-			//new GetBadgeValues(this, username, password).start();
-		}
+		/*
+		 * Starts a seperate thread which is absolutely detached to this
+		 * UI-thread. This thread contains heavy calculation which can be done
+		 * asynchronous.
+		 * 
+		 * GetBadgeValues Thread was planned to be used here to get real badge balance,
+		 * but the JSON API did not provide enough data for this design. But you can
+		 * 
+		 * GetBadgeValuesMock will be used in productive code to demonstrate
+		 * the design we had planned.
+		 */
+		 new GetBadgeValuesMock(this).start();
 	}
 
 	/*
@@ -96,32 +80,14 @@ public class BadgeActivity extends Activity {
 	 * instanced. This exact functionality is needed to update your UI, because
 	 * you can only update your UI with threads started by this UI-instance.
 	 */
-	public void updateUI() {
+	public void updateUILater() {
 		badgeHandler.post(updateUI);
 	}
 	
-	public void showWrongPassword() {
-		badgeHandler.post(showWrongPasswordDialog);
-	}
-	
-	final Runnable showWrongPasswordDialog = new Runnable(){
-		public void run(){	
-			Toast.makeText(getApplicationContext(), "Username or Password is wrong!", Toast.LENGTH_SHORT).show();
-		}
-	};
-	
-	public void showURLUnreachableDialog() {
-		badgeHandler.post(showURLUnreachableDialog);
-	}
-	
-	final Runnable showURLUnreachableDialog = new Runnable(){
-		public void run(){	
-			Toast.makeText(getApplicationContext(), "URL is unreachable. Are you inside HSR Network or VPN.", Toast.LENGTH_LONG).show();
-		}
-	};
-
-	// The handler will create this thread which will eventually update the UI
-	// with the new values.
+	/*
+	 * The handler will create this thread which will eventually update the UI
+	 * with the new values.
+	 */
 	final Runnable updateUI = new Runnable() {
 		public void run() {
 
@@ -183,8 +149,8 @@ public class BadgeActivity extends Activity {
 							.getLastUpdatedWholeBalance()));
 
 			mDialog.dismiss();
-			System.out.println("The values has been set in the UI.");
-			Toast.makeText(getApplicationContext(), "These are just dummy entries...", Toast.LENGTH_SHORT).show();
+			Log.d("BadgeActivity", "The values has been set in the UI.");
+			Toast.makeText(getApplicationContext(), "Dies sind nur Testdaten!", Toast.LENGTH_SHORT).show();
 		}
 	};
 
@@ -194,13 +160,5 @@ public class BadgeActivity extends Activity {
 
 	public void setBadgeValues(BadgeValues badgeValues) {
 		this.badgeValues = badgeValues;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 }

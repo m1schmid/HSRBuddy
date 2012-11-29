@@ -2,6 +2,7 @@ package ch.hsr.hsrbuddy.activity.badge;
 
 import java.util.Date;
 
+import android.util.Log;
 import ch.hsr.hsrbuddy.activity.BadgeActivity;
 
 public class GetBadgeValuesMock extends Thread {
@@ -12,11 +13,11 @@ public class GetBadgeValuesMock extends Thread {
 		this.badgeActivity = badgeActivity;
 }
 	public void run() {
-		System.out.println("The Thread GetBadgeValuesMock has been started.");
+		Log.d("GetBadgeValuesMock", "The Thread GetBadgeValuesMock has been started.");
 					
 		try {
 			//Simulate loading time
-			Thread.sleep(1500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 
@@ -29,7 +30,7 @@ public class GetBadgeValuesMock extends Thread {
 			expenseItem.setDate(new Date());
 			expenseItem.setLocation("Mensa"); 
 			expenseItem.setAmount(8.60);
-			badgeActivity.getBadgeValues().getLastPurchases().add(expenseItem);
+			badgeActivity.getBadgeValues().getLastPurchases().add(0, expenseItem);
 		}
 		
 		badgeActivity.getBadgeValues().setLastUpdatedBalance(new Date());
@@ -38,18 +39,14 @@ public class GetBadgeValuesMock extends Thread {
 		badgeActivity.getBadgeValues().setTotal(1027.20);
 		badgeActivity.getBadgeValues().setLastUpdatedWholeBalance(new Date ());
 		
-		System.out.println("The variables have been set.");
+		Log.d("GetBadgeValuesMock", "The variables have been set.");
 		
 		/*
-		 * The badgeHandler represents the UI-Msg-Queue to the BadgeActivityInstance.
-		 * With post you can add threads to the handler which will then be executed
-		 * from the same thread in which the handler is instanced. This exact functionality
-		 * is needed to update your UI, because you can only update your UI with threads
-		 * started by this UI-instance. 
+		 * Please read the whole explanation at the updateUILater() method.
 		 */
-        //badgeHandler.post(updateUI);
-		badgeActivity.updateUI();
-		System.out.println("The Thread GetBadgeValuesMock ended.");
+		badgeActivity.updateUILater();
+		
+		Log.d("GetBadgeValuesMock", "The Thread GetBadgeValuesMock ended.");
 
 	}
 }
