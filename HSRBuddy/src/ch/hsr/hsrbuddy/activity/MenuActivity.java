@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -57,6 +58,9 @@ public class MenuActivity extends Activity {
 			manualRefresh = true;
 			showLoadingDialog();
 			new Thread(crawlMenuplan, "crawlMenuplanWebsite").start();
+			return true;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

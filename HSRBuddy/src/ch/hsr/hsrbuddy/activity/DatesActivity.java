@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -60,6 +61,9 @@ public class DatesActivity extends Activity {
 			manualRefresh = true;
 			showLoadingDialog();
 			new Thread(parseValues, "parseValuesThread").start();
+			return true;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
