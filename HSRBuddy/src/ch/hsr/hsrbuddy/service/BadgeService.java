@@ -1,10 +1,10 @@
 package ch.hsr.hsrbuddy.service;
 
+import ch.hsr.hsrbuddy.activity.badge.GetBadgeValues;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import ch.hsr.hsrbuddy.activity.badge.getBadgeValues;
 
 public class BadgeService extends IntentService {
 	
@@ -26,7 +26,7 @@ public class BadgeService extends IntentService {
 		if(username.equals("NOT_FOUND") || password.equals("NOT_FOUND")){
 			//do nothing, user must find out that he must set password on his own
 		} else {
-			new getBadgeValues(username, password, prefs).start();
+			new GetBadgeValues(username, password, prefs).start();
 		}
 
 		Log.d("BadgeService", "The BadgeService Thread started the GetBadgeValues Thread!");

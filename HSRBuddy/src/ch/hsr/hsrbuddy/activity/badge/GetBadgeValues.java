@@ -32,7 +32,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
-public class getBadgeValues extends Thread {
+public class GetBadgeValues extends Thread {
 
 	private String username;
 	private String password;
@@ -40,7 +40,7 @@ public class getBadgeValues extends Thread {
 	public static final String PREFS_NAME = "HSRBuddyPreferences";
 	SharedPreferences prefs;
 
-	public getBadgeValues(String username, String password, SharedPreferences prefs) {
+	public GetBadgeValues(String username, String password, SharedPreferences prefs) {
 		this.username = username;
 		this.password = password;
 		this.prefs = prefs;
