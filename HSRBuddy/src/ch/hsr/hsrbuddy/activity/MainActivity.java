@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import ch.hsr.hsrbuddy.R;
 import ch.hsr.hsrbuddy.activity.map.MapActivity;
 
