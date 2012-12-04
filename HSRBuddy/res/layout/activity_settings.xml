@@ -1,100 +1,118 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp" >
-
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <!-- TITLE -->
     <TextView
-        android:id="@+id/textViewUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/usernameLabel" />
-
-    <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textViewUsername"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/textViewPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editTextUsername"
-        android:text="@string/passwordLabel" />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextUsername"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/editTextUsername"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/credentialsSaveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/editTextPassword"
-        android:onClick="saveCredentials"
-        android:text="@string/credentialsSaveButton" />
-
-    <View
-        android:id="@+id/settingsFirstLine"
+        android:id="@+id/settingsTitle"
         android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/credentialsSaveButton"
-        android:background="#DDDDDDDD" />
-
-    <TextView
-        android:id="@+id/textViewDeleteCreds"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/settingsFirstLine"
-        android:text="@string/deleteCredsLabel" />
-
-    <Button
-        android:id="@+id/credentialsDeleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/settingsFirstLine"
-        android:onClick="deleteCredentials"
-        android:text="@string/credentialsDeleteButton" />
-
-    <View
-        android:id="@+id/settingsSecondLine"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/credentialsDeleteButton"
-        android:background="#DDDDDDDD" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/settingsSecondLine"
-        android:onClick="startPollingServiceViaButton"
-        android:text="@string/start_service" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/settingsSecondLine"
-        android:onClick="stopPollingService"
-        android:text="@string/stop_service" />
-
-</RelativeLayout>
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="5dp"
+        android:background="#3369ac"
+        android:textColor="#fff"
+        android:text="@string/menu_settings"
+        android:textSize="25sp" />
+    
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:padding="5dp">
+	
+	    <TextView
+	        android:id="@+id/textViewUsername"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:text="@string/usernameLabel" />
+	
+	    <EditText
+	        android:id="@+id/editTextUsername"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_toRightOf="@+id/textViewUsername"
+	        android:inputType="text" />
+	
+	    <TextView
+	        android:id="@+id/textViewPassword"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/editTextUsername"
+	        android:text="@string/passwordLabel" />
+	
+	    <EditText
+	        android:id="@+id/editTextPassword"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/editTextUsername"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/editTextUsername"
+	        android:inputType="textPassword" />
+	
+	    <Button
+	        android:id="@+id/credentialsSaveButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/editTextPassword"
+	        android:onClick="saveCredentials"
+	        android:text="@string/credentialsSaveButton" />	
+	    <View
+	        android:id="@+id/settingsFirstLine"
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dip"
+	        android:layout_below="@+id/credentialsSaveButton"
+	        android:background="#DDDDDDDD" />
+	
+	    <TextView
+	        android:id="@+id/textViewDeleteCreds"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/settingsFirstLine"
+	        android:text="@string/deleteCredsLabel" />
+	
+	    <Button
+	        android:id="@+id/credentialsDeleteButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/settingsFirstLine"
+	        android:onClick="deleteCredentials"
+	        android:text="@string/credentialsDeleteButton" />
+	
+	    <View
+	        android:id="@+id/settingsSecondLine"
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dip"
+	        android:layout_below="@+id/credentialsDeleteButton"
+	        android:background="#DDDDDDDD" />
+	
+	    <Button
+	        android:id="@+id/button1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/settingsSecondLine"
+	        android:onClick="startPollingServiceViaButton"
+	        android:text="@string/start_service" />
+	
+	    <Button
+	        android:id="@+id/button2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/settingsSecondLine"
+	        android:onClick="stopPollingService"
+	        android:text="@string/stop_service" />
+	
+	</RelativeLayout>
+</LinearLayout>

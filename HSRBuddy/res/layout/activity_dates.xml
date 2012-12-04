@@ -7,36 +7,27 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dip"
         android:orientation="vertical"
         android:paddingBottom="20dp" >
-
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center" >
-
-            <TextView
-                android:id="@+id/badgeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/title_activity_dates"
-                android:textSize="25dp" />
-        </LinearLayout>
+        
+	    <TextView
+	        android:id="@+id/homeTitle"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical|center_horizontal"
+	        android:padding="5dp"
+        	android:background="#3369ac"
+	        android:textColor="#fff"
+            android:text="@string/title_activity_dates"
+	        android:textSize="25sp" />
+	    
         <LinearLayout
 	        xmlns:android="http://schemas.android.com/apk/res/android"
 	        xmlns:tools="http://schemas.android.com/tools"
 	        android:id="@+id/dates"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:layout_margin="10dp"
 	        android:orientation="vertical" >
              </LinearLayout>
     </LinearLayout>

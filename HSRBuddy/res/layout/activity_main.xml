@@ -13,8 +13,10 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:padding="5dp"
+        android:background="#3369ac"
+        android:textColor="#fff"
         android:text="@string/main_title"
-        android:textSize="25dp" />
+        android:textSize="25sp" />
     
         <!--homeScreenBalance -->
     <TextView
@@ -22,8 +24,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
+        android:background="#acaeb0"
         android:text="@string/home_screen_balance"
-        android:textSize="12dp" />
+        android:textSize="12sp" />
 
     <!-- 1.Row -->
     <LinearLayout
@@ -38,23 +41,17 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:baselineAligned="false"
-            android:onClick="open">
+            android:gravity="bottom|right"
+            android:onClick="open"
+            android:padding="@dimen/padding" >
 
             <ImageView
                 android:id="@+id/menuIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:contentDescription="@string/iconMenuDescrption"
+                android:background="@drawable/border"
                 android:src="@drawable/ic_food" />
-
-            <TextView
-                android:id="@+id/menuIconText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/menuIcon"
-                android:layout_centerInParent="true"
-                android:text="@string/icon_text_menu" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -63,24 +60,17 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:baselineAligned="false"
+            android:gravity="bottom"
             android:onClick="open"
-            android:orientation="vertical" >
+            android:padding="@dimen/padding" >
 
             <ImageView
                 android:id="@+id/datesIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:contentDescription="@string/iconDatesDescrption"
+                android:background="@drawable/border"
                 android:src="@drawable/ic_dates" />
-
-            <TextView
-                android:id="@+id/datesIconText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/datesIcon"
-                android:layout_centerInParent="true"
-                android:text="@string/icon_text_dates" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -97,23 +87,17 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:baselineAligned="false"
-            android:onClick="open">
+            android:gravity="right"
+            android:onClick="open"
+            android:padding="@dimen/padding" >
 
             <ImageView
                 android:id="@+id/badgeIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:contentDescription="@string/iconBadgeDescrption"
+                android:background="@drawable/border"
                 android:src="@drawable/ic_badge" />
-
-            <TextView
-                android:id="@+id/badgeIconText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/badgeIcon"
-                android:layout_centerInParent="true"
-                android:text="@string/icon_text_badge" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -122,23 +106,16 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:baselineAligned="false"
-            android:onClick="open">
+            android:onClick="open"
+            android:padding="@dimen/padding" >
 
             <ImageView
                 android:id="@+id/mapIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:contentDescription="@string/iconMapDescrption"
+                android:background="@drawable/border"
                 android:src="@drawable/ic_map" />
-
-            <TextView
-                android:id="@+id/mapIconText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mapIcon"
-                android:layout_centerInParent="true"
-                android:text="@string/icon_text_map" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
