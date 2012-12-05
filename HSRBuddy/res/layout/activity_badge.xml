@@ -1,260 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="15dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="20dp" >
 
     <!-- Title -->
 
     <TextView
         android:id="@+id/badgeTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="25dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
+        android:background="#3369ac"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="5dp"
         android:text="@string/title_activity_badge"
-        android:textSize="25dp" />
+        android:textColor="#fff"
+        android:textSize="25sp" />
 
-    <!-- CurrentBalance Label -->
-
-    <TextView
-        android:id="@+id/currentBalanceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/badgeTitle"
-        android:text="@string/currentBalanceLabel"
-        android:textStyle="bold" />
-
-    <!-- CurrentBalance Value -->
-
-    <TextView
-        android:id="@+id/currentBalanceValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/badgeTitle"
-        android:textStyle="bold" />
-
-    <!-- Horizontal Top Line 1.Row -->
-
-    <View
-        android:id="@+id/firstline"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/currentBalanceLabel"
-        android:background="#DDDDDDDD" />
-
-    <!-- Last Expense Titel 1.Row -->
-
-    <TextView
-        android:id="@+id/lastExpenseRowTitel1"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/firstline"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="15dp">
 
-    <!-- Last Expense Value 1.Row -->
+        <!-- CurrentBalance Label -->
 
-    <TextView
-        android:id="@+id/lastExpenseRowValue1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lastExpenseRowTitel1" />
+        <TextView
+            android:id="@+id/currentBalanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/badgeTitle"
+            android:text="@string/currentBalanceLabel"
+            android:textStyle="bold" />
 
-    <!-- Horizontal Top Line 2.Row -->
+        <!-- CurrentBalance Value -->
 
-    <View
-        android:id="@+id/secondline"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/lastExpenseRowValue1"
-        android:background="#DDDDDDDD" />
+        <TextView
+            android:id="@+id/currentBalanceValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/badgeTitle"
+            android:textStyle="bold" />
 
-    <!-- Last Expense Titel 2.Row -->
+        <!-- Horizontal Top Line 1.Row -->
 
-    <TextView
-        android:id="@+id/lastExpenseRowTitel2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/secondline"
-        android:textStyle="bold" />
+        <View
+            android:id="@+id/firstline"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_below="@+id/currentBalanceLabel"
+            android:background="#DDDDDDDD" />
 
-    <!-- Last Expense Value 2.Row -->
+        <!-- Last Expense Titel 1.Row -->
 
-    <TextView
-        android:id="@+id/lastExpenseRowValue2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lastExpenseRowTitel2" />
+        <TextView
+            android:id="@+id/lastExpenseRowTitel1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/firstline"
+            android:textStyle="bold" />
 
-    <!-- Horizontal Top Line 3.Row -->
+        <!-- Last Expense Value 1.Row -->
 
-    <View
-        android:id="@+id/thirdline"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/lastExpenseRowValue2"
-        android:background="#DDDDDDDD" />
+        <TextView
+            android:id="@+id/lastExpenseRowValue1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/lastExpenseRowTitel1" />
 
-    <!-- Last Expense Titel 3.Row -->
+        <!-- Horizontal Top Line 2.Row -->
 
-    <TextView
-        android:id="@+id/lastExpenseRowTitel3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/thirdline"
-        android:textStyle="bold" />
+        <View
+            android:id="@+id/secondline"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_below="@+id/lastExpenseRowValue1"
+            android:background="#DDDDDDDD" />
 
-    <!-- Last Expense Value 3.Row -->
+        <!-- Last Expense Titel 2.Row -->
 
-    <TextView
-        android:id="@+id/lastExpenseRowValue3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/lastExpenseRowTitel3" />
+        <TextView
+            android:id="@+id/lastExpenseRowTitel2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/secondline"
+            android:textStyle="bold" />
 
-    <!-- Last Line of Expenses -->
+        <!-- Last Expense Value 2.Row -->
 
-    <View
-        android:id="@+id/fourthline"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/lastExpenseRowValue3"
-        android:background="#DDDDDDDD" />
+        <TextView
+            android:id="@+id/lastExpenseRowValue2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/lastExpenseRowTitel2" />
 
-    <!-- Last Updated Balance -->
+        <!-- Horizontal Top Line 3.Row -->
 
-    <TextView
-        android:id="@+id/lastUpdatedBalanceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/fourthline"
-        android:textSize="11sp"
-        android:textStyle="italic" />
+        <View
+            android:id="@+id/thirdline"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_below="@+id/lastExpenseRowValue2"
+            android:background="#DDDDDDDD" />
 
-    <!-- REPLACE THIS WITH UPDATE BUTTON / ICON -->
+        <!-- Last Expense Titel 3.Row -->
 
-    <TextView
-        android:id="@+id/UpdateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/fourthline"
-        android:text="refresh"
-        android:textSize="11sp"
-        android:textStyle="italic" />
+        <TextView
+            android:id="@+id/lastExpenseRowTitel3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/thirdline"
+            android:textStyle="bold" />
 
-    <!-- Last Row Total Left -->
+        <!-- Last Expense Value 3.Row -->
 
-    <TextView
-        android:id="@+id/totalTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lineAboveTotal"
-        android:layout_alignParentLeft="true"
-        android:text="@string/totalLabel"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/lastExpenseRowValue3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/lastExpenseRowTitel3" />
 
-    <!-- Last Row Total Right -->
+        <!-- Last Line of Expenses -->
 
-    <TextView
-        android:id="@+id/totalValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lineAboveTotal"
-        android:layout_alignParentRight="true" />
+        <View
+            android:id="@+id/fourthline"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_below="@+id/lastExpenseRowValue3"
+            android:background="#DDDDDDDD" />
 
-    <!-- Horizontal Line above Total -->
+        <!-- Last Updated Balance -->
 
-    <View
-        android:id="@+id/lineAboveTotal"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_above="@+id/totalMensaLabel"
-        android:background="#DDDDDDDD" />
+        <TextView
+            android:id="@+id/lastUpdatedBalanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/fourthline"
+            android:textSize="11sp"
+            android:textStyle="italic" />
 
-    <!-- totalMensaLabel -->
+        <!-- REPLACE THIS WITH UPDATE BUTTON / ICON -->
 
-    <TextView
-        android:id="@+id/totalMensaLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/totalPrinterLabel"
-        android:layout_alignParentLeft="true"
-        android:text="@string/totalMensaLabel" />
+        <TextView
+            android:id="@+id/UpdateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/fourthline"
+            android:text="refresh"
+            android:textSize="11sp"
+            android:textStyle="italic" />
 
-    <!-- totalMensaValue -->
+        <!-- Last Row Total Left -->
 
-    <TextView
-        android:id="@+id/totalMensaValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/totalPrinterLabel"
-        android:layout_alignParentRight="true" />
+        <TextView
+            android:id="@+id/totalTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/lineAboveTotal"
+            android:layout_alignParentLeft="true"
+            android:text="@string/totalLabel"
+            android:textStyle="bold" />
 
-    <!-- totalPrinterLabel -->
+        <!-- Last Row Total Right -->
 
-    <TextView
-        android:id="@+id/totalPrinterLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lineAboveWholeTotal"
-        android:layout_alignParentLeft="true"
-        android:text="@string/totaPrinterlLabel" />
+        <TextView
+            android:id="@+id/totalValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/lineAboveTotal"
+            android:layout_alignParentRight="true" />
 
-    <!-- totalPrinterValue -->
+        <!-- Horizontal Line above Total -->
 
-    <TextView
-        android:id="@+id/totalPrinterValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lineAboveWholeTotal"
-        android:layout_alignParentRight="true" />
+        <View
+            android:id="@+id/lineAboveTotal"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_above="@+id/totalMensaLabel"
+            android:background="#DDDDDDDD" />
 
-    <!-- neu -->
+        <!-- totalMensaLabel -->
 
-    <View
-        android:id="@+id/lineAboveWholeTotal"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_above="@+id/lastUpdatedWholeBalanceLabel"
-        android:background="#DDDDDDDD" />
+        <TextView
+            android:id="@+id/totalMensaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/totalPrinterLabel"
+            android:layout_alignParentLeft="true"
+            android:text="@string/totalMensaLabel" />
 
-    <!-- Last Updated Whole Balance -->
+        <!-- totalMensaValue -->
 
-    <TextView
-        android:id="@+id/lastUpdatedWholeBalanceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:textSize="11sp"
-        android:textStyle="italic" />
+        <TextView
+            android:id="@+id/totalMensaValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/totalPrinterLabel"
+            android:layout_alignParentRight="true" />
 
-    <!-- REPLACE THIS WITH UPDATE BUTTON / ICON -->
+        <!-- totalPrinterLabel -->
 
-    <TextView
-        android:id="@+id/UpdateWholeBalanceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="refresh"
-        android:textSize="11sp"
-        android:textStyle="italic" />
+        <TextView
+            android:id="@+id/totalPrinterLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/lineAboveWholeTotal"
+            android:layout_alignParentLeft="true"
+            android:text="@string/totaPrinterlLabel" />
 
-</RelativeLayout>
+        <!-- totalPrinterValue -->
+
+        <TextView
+            android:id="@+id/totalPrinterValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/lineAboveWholeTotal"
+            android:layout_alignParentRight="true" />
+
+        <!-- neu -->
+
+        <View
+            android:id="@+id/lineAboveWholeTotal"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_above="@+id/lastUpdatedWholeBalanceLabel"
+            android:background="#DDDDDDDD" />
+
+        <!-- Last Updated Whole Balance -->
+
+        <TextView
+            android:id="@+id/lastUpdatedWholeBalanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="11sp"
+            android:textStyle="italic" />
+
+        <!-- REPLACE THIS WITH UPDATE BUTTON / ICON -->
+
+        <TextView
+            android:id="@+id/UpdateWholeBalanceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="refresh"
+            android:textSize="11sp"
+            android:textStyle="italic" />
+    </RelativeLayout>
+
+</LinearLayout>
