@@ -34,20 +34,17 @@ public class MapActivity extends Activity {
     	switch (id)
     	{
     		case R.id.building1:
-    			buildingId = R.drawable.schulgebaeude_og;
-    	        break;
-    		case R.id.building2:
-    			buildingId = R.drawable.laborgebaeude_eg;
+    			buildingId = R.drawable.geb1;
     	        break;
     		case R.id.building3:
-    			buildingId = R.drawable.hoersaalgebaeude_eg;
-    	        break;
-    		case R.id.building4:
-    			buildingId = R.drawable.verwaltungsgebaeude_og;
+    			buildingId = R.drawable.geb3;
     	        break;
     		case R.id.building5:
-    			buildingId = R.drawable.foyergebaeude_eg;
+    			buildingId = R.drawable.geb5;
     	        break;
+    		case R.id.building6:
+    			buildingId = R.drawable.geb6;
+    			break;
     	}
 		intent.putExtra("imageId", buildingId);
         startActivity(intent);
