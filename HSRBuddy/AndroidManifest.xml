@@ -17,6 +17,7 @@
 
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +27,7 @@
         </activity>
         <activity
             android:name=".activity.MenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_menu" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -33,6 +35,7 @@
         </activity>
         <activity
             android:name=".activity.map.MapActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_map" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -40,6 +43,7 @@
         </activity>
         <activity
             android:name=".activity.BadgeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_badge" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -47,6 +51,7 @@
         </activity>
         <activity
             android:name=".activity.DatesActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_dates" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -54,6 +59,7 @@
         </activity>
         <activity
             android:name=".activity.map.MapActivityDetail"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_map_activity_building_one" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -61,6 +67,7 @@
         </activity>
         <activity
             android:name=".activity.SettingsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_settings" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
